@@ -32,11 +32,11 @@
 
         <li class="menu-header">Data Master</li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="far fa-user"></i>
+            <a href="/guru" class="nav-link "><i class="far fa-user"></i>
                 <span>Guru</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="far fa-user"></i>
+            <a href="/siswa" class="nav-link "><i class="far fa-user"></i>
                 <span>Siswa</span></a>
         </li>
         <li class="nav-item dropdown">
@@ -44,21 +44,21 @@
                 <span>Jurusan</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="far fa-user"></i>
+            <a href="/operator" class="nav-link "><i class="far fa-user"></i>
                 <span>Operator</span></a>
         </li>
 
         <li class="menu-header">Setting</li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="fas fa-th-large"></i>
+            <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
                 <span>Mapel</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="fas fa-exclamation"></i>
+            <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>
                 <span>Link</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="fas fa-ellipsis-h"></i>
+            <a href="/waktu" class="nav-link "><i class="fas fa-ellipsis-h"></i>
                 <span>Waktu Ujian</span></a>
         </li>
 

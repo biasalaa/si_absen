@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jurusan extends Model
+class Tahun_Ajaran extends Model
 {
     use HasFactory;
-    protected $table = "jurusan";
-    protected $fillable = ['jurusan'];
+        protected $table = "tahun_ajaran";
+    protected $fillable = ['tahun','semester'];
 }
