@@ -36,7 +36,7 @@
                 <span>Guru</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="far fa-user"></i>
+            <a href="" class="nav-link "><i class="far fa-user"></i>
                 <span>Siswa</span></a>
         </li>
         <li class="nav-item dropdown">
@@ -50,7 +50,7 @@
 
         <li class="menu-header">Setting</li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="fas fa-th-large"></i>
+            <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
                 <span>Mapel</span></a>
         </li>
         <li class="nav-item dropdown">
