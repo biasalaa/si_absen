@@ -123,11 +123,11 @@ class JurusanController extends Controller
 
         $jurusan = new JurusanImport;
         Excel::import($jurusan, public_path('Excel/' . $nama_file));
+        File::delete(public_path('Excel/' . $nama_file));
         if ($jurusan->error()) {
             return redirect()->back()->with('error', $jurusan->pesan());
         }
 
-        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $jurusan->berhasil());
     }

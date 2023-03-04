@@ -36,6 +36,8 @@ class SiswaImport implements ToModel,WithHeadingRow
     }
     public function model(array $row)
     {
+        $this->total++;
+
         $jurusanData = $row['jurusan'] ?? null;
         $namaData = $row['nama'] ?? null;
         $nisnData = $row['nisn'] ?? null;
@@ -58,8 +60,9 @@ class SiswaImport implements ToModel,WithHeadingRow
             $id_jurusan = $id_jurusan->id;
             $id_ruangan = $id_ruangan->id;
         }else{
-            $id_jurusan = 0;
-            $id_ruangan = 0;
+        $this->gagal++;
+
+            return;
         }
 
         
@@ -67,7 +70,7 @@ class SiswaImport implements ToModel,WithHeadingRow
         $id_Ajaran = Tahun_Ajaran::where('tahun',$this->tahun)->where('semester',$this->semester)->first()->id;
         if(!$id_Ajaran)return;
 
-     
+        $this->berhasil++;
         return new Siswa([
             'nama_siswa' =>  $namaData,
             'nisn' => $nisnData,

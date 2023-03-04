@@ -185,10 +185,10 @@ class SiswaController extends Controller
 
         $siswa = new SiswaImport;
         Excel::import($siswa, public_path('Excel/' . $nama_file));
+        File::delete(public_path('Excel/' . $nama_file));
         if ($siswa->error()) {
             return redirect()->back()->with('error', $siswa->pesan());
         }
-        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $siswa->berhasil());
     }

@@ -123,10 +123,10 @@ class GuruController extends Controller
         $file->move(public_path('Excel'), $nama_file);
         $guru = new GuruImport;
         Excel::import($guru, public_path('Excel/' . $nama_file));
+        File::delete(public_path('Excel/' . $nama_file));
   if ($guru->error()) {
             return redirect()->back()->with('error', $guru->pesan());
         }
-        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $guru->berhasil());
     }

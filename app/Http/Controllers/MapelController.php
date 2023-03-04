@@ -124,10 +124,10 @@ class MapelController extends Controller
 
         $mapel = new MapelImport;
         Excel::import($mapel, public_path('Excel/' . $nama_file));
+        File::delete(public_path('Excel/' . $nama_file));
         if ($mapel->error()) {
             return redirect()->back()->with('error', $mapel->pesan());
         }
-        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $mapel->berhasil());
     }
