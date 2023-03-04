@@ -50,18 +50,18 @@ class PrintController extends Controller
 
     public function printBerita(Request $request)
     {
-
+        // dd($request);
         $request->validate([
             'ruangan'=>'required',
             'sesi'=>'required',
-            'guru'=>'required',
+            'nama_guru'=>'required',
             'mapel1'=>'required',
             'waktu'=>'required',
         ],
         [
             'ruangan.required' => 'ruangan tidak boleh kosong',
             'sesi.required' => 'sesi tidak boleh kosong',
-            'guru.required' => 'guru tidak boleh kosong',
+            'nama_guru.required' => 'Pengawas tidak boleh kosong',
             'mapel1.required' => 'mapel1 tidak boleh kosong',
             'mapel.required' => 'mapel tidak boleh kosong',
         ]);
