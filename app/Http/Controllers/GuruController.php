@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jurusan;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 use Str;
-class JurusanController extends Controller
+class GuruController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+     public function index()
     {
          $cari = Request()->cari;
-        $data = Jurusan::paginate(20);
+        $data = Guru::paginate(20);
         if ($cari) {
-        $data = Jurusan::where('jurusan','like','%'.$cari)->paginate(20);
+        $data = Guru::where('nama_guru','like','%'.$cari)->paginate(20);
         }
-        return view('jurusan.index', compact('data','cari'));
+        return view('guru.index', compact('data','cari'));
     }
 
     /**
@@ -29,7 +29,7 @@ class JurusanController extends Controller
      */
     public function create()
     {
-         return view('jurusan.create');
+         return view('guru.create');
     }
 
     /**
@@ -42,29 +42,29 @@ class JurusanController extends Controller
     {
          Request()->validate(
             [
-                'jurusan'=>'required',
-            ]
+                'nama_guru'=>'required'
+            ,],['nama_guru.required'=>'Nama Guru Wajib Diisi']
         );
 
-        $jurusan = Str::upper(Request()->jurusan);
+        $namaGuru = Str::upper(Request()->nama_guru);
 
 
         // insert data to database
-        Jurusan::create([
-            'jurusan'=>$jurusan,
+        Guru::create([
+            'nama_guru'=>$namaGuru,
         ]);
 
 
-        return redirect('/jurusan')->with('success','Berhasil Menambah Jurusan');
+        return redirect('/guru')->with('success','Berhasil Menambah Guru');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Mapel  $Guru
      * @return \Illuminate\Http\Response
      */
-    public function show(Jurusan $jurusan)
+    public function show(Guru $Guru)
     {
         //
     }
@@ -72,47 +72,47 @@ class JurusanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Guru  $Guru
      * @return \Illuminate\Http\Response
      */
-    public function edit(Jurusan $jurusan)
+    public function edit(Guru $Guru)
     {
-        return view('jurusan.edit', compact('jurusan'));
+        $data = $Guru;
+        return view('guru.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Guru  $Guru
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jurusan $jurusan)
+    public function update(Request $request, Guru $Guru)
     {
          Request()->validate(
             [
-                'jurusan'=>'required',
-            ]
+                'nama_guru'=>'required',
+            ],['nama_guru.required'=>'Nama Guru Wajib Diisi']
         );
-
-        $jurusanData = Str::upper(Request()->jurusan);
+        $GuruData = Str::upper(Request()->nama_guru);
         // update data to database
-        $jurusan->update([
-            'jurusan'=>$jurusanData,
+        $Guru->update([
+            'nama_guru'=>$GuruData,
         ]);
 
-        return redirect('/jurusan')->with('success','Berhasil Mengedit Jurusan');
+        return redirect('/guru')->with('success','Berhasil Mengedit Guru');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Guru  $Guru
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jurusan $jurusan)
+    public function destroy(Guru $Guru)
     {
-        $jurusan->delete();
-        return redirect()->back()->with('success', 'jurusan berhasil di hapus');
+        $Guru->delete();
+        return redirect()->back()->with('success', 'Guru Berhasil Dihapus');
     }
 }

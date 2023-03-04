@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jurusan;
+use App\Models\Mapel;
 use Illuminate\Http\Request;
 use Str;
-class JurusanController extends Controller
+class MapelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,11 @@ class JurusanController extends Controller
     public function index()
     {
          $cari = Request()->cari;
-        $data = Jurusan::paginate(20);
+        $data = Mapel::paginate(20);
         if ($cari) {
-        $data = Jurusan::where('jurusan','like','%'.$cari)->paginate(20);
+        $data = Mapel::where('mapel','like','%'.$cari)->paginate(20);
         }
-        return view('jurusan.index', compact('data','cari'));
+        return view('mapel.index', compact('data','cari'));
     }
 
     /**
@@ -29,7 +29,7 @@ class JurusanController extends Controller
      */
     public function create()
     {
-         return view('jurusan.create');
+         return view('mapel.create');
     }
 
     /**
@@ -42,29 +42,29 @@ class JurusanController extends Controller
     {
          Request()->validate(
             [
-                'jurusan'=>'required',
-            ]
+                'nama_mapel'=>'required'
+            ,],['nama_mapel.required'=>'Nama Mapel Wajib Diisi']
         );
 
-        $jurusan = Str::upper(Request()->jurusan);
+        $Mapel = Str::upper(Request()->nama_mapel);
 
 
         // insert data to database
-        Jurusan::create([
-            'jurusan'=>$jurusan,
+        Mapel::create([
+            'nama_mapel'=>$Mapel,
         ]);
 
 
-        return redirect('/jurusan')->with('success','Berhasil Menambah Jurusan');
+        return redirect('/mapel')->with('success','Berhasil Menambah Mapel');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Mapel  $Mapel
      * @return \Illuminate\Http\Response
      */
-    public function show(Jurusan $jurusan)
+    public function show(Mapel $Mapel)
     {
         //
     }
@@ -72,47 +72,48 @@ class JurusanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Mapel  $Mapel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Jurusan $jurusan)
+    public function edit(Mapel $Mapel)
     {
-        return view('jurusan.edit', compact('jurusan'));
+
+        $data = $Mapel;
+        return view('mapel.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Mapel  $Mapel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Jurusan $jurusan)
+    public function update(Request $request, Mapel $Mapel)
     {
          Request()->validate(
             [
-                'jurusan'=>'required',
-            ]
+                'nama_mapel'=>'required',
+            ],['nama_mapel.required'=>'Nama Mapel Wajib Diisi']
         );
-
-        $jurusanData = Str::upper(Request()->jurusan);
+        $MapelData = Str::upper(Request()->nama_mapel);
         // update data to database
-        $jurusan->update([
-            'jurusan'=>$jurusanData,
+        $Mapel->update([
+            'nama_mapel'=>$MapelData,
         ]);
 
-        return redirect('/jurusan')->with('success','Berhasil Mengedit Jurusan');
+        return redirect('/mapel')->with('success','Berhasil Mengedit Mapel');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Jurusan  $jurusan
+     * @param  \App\Models\Mapel  $Mapel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jurusan $jurusan)
+    public function destroy(Mapel $Mapel)
     {
-        $jurusan->delete();
-        return redirect()->back()->with('success', 'jurusan berhasil di hapus');
+        $Mapel->delete();
+        return redirect()->back()->with('success', 'Mapel Berhasil Dihapus');
     }
 }

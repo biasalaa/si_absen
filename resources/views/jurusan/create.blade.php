@@ -15,7 +15,10 @@
                     <div class="row">
                         <div class="form-group col-lg-12">
                             <label>Jurusan</label>
-                            <input type="text" name="jurusan" class="form-control">
+                            <input type="text" value="{{ old('jurusan') }}" name="jurusan" class="form-control">
+                            @error('jurusan')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
 

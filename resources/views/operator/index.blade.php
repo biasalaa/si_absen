@@ -2,7 +2,7 @@
 
 @section('header')
     <div class="section-header">
-        <h1>Jurusan</h1>
+        <h1>Operator</h1>
     </div>
 @endsection
 
@@ -10,8 +10,8 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header" style="justify-content: space-between">
-                <a href="/jurusan/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
-                <form action="/jurusan" method="get">
+                <a href="{{ Request()->url() }}/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
+                <form action="/operator" method="get">
                     <input type="text" value="{{ $cari }}" name="cari" placeholder="Cari..."
                         class="form-control " autofocus id="">
                 </form>
@@ -33,22 +33,23 @@
                             <table class="table table-striped table-md">
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">Jurusan</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Username</th>
                                 </tr>
                                 <tr>
                                     @forelse ($data as $j)
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td> {{ $j->jurusan }} </td>
+                                        <td> {{ $j->nama }} </td>
+                                        <td> {{ $j->username }} </td>
                                         <td>
                                             <div class=" d-flex ">
                                                 <div class="m-1">
-                                                    <a href="/jurusan/{{ $j->id }}/edit" class="btn btn-warning"><i
-                                                            class="fas fa-edit"></i></a>
+                                                    <a href="{{ Request()->url() }}/{{ $j->id }}/edit"
+                                                        class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                                 </div>
                                                 <div class="m-1">
-                                                    <form class="d-inline" action="/jurusan/{{ $j->id }}"
-                                                        method="POST">
+                                                    <form class="d-inline"
+                                                        action="{{ Request()->url() }}/{{ $j->id }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger" type="submit"><i
