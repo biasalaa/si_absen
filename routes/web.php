@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GuruController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JurusanController;
@@ -22,10 +23,8 @@ use App\Http\Controllers\WaktuController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
 
+Route::resource('/', DashboardController::class);
 Route::resource('/jurusan', JurusanController::class);
 Route::resource('/siswa', SiswaController::class);
 Route::resource('/mapel', MapelController::class);
@@ -36,4 +35,5 @@ Route::resource('/tahun_ajaran', TahunAjaranController::class);
 Route::resource('/absen-siswa', AbsenController::class);
 Route::resource('/siapkan-ruangan', AbsenController::class);
 Route::resource('/operator', OperatorController::class);
-
+Route::post('/siswa/s/import',[SiswaController::class,'Import']);
+Route::post('/guru/g/import',[GuruController::class,'Import']);

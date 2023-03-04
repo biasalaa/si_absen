@@ -10,7 +10,11 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header" style="justify-content: space-between">
-                <a href="{{ Request()->url() }}/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
+                <div class="">
+                    <a href="{{ Request()->url() }}/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
+                    <button class="btn btn-primary" id="modal-guru">Import</button>
+                </div>
+
                 <form action="/guru" method="get">
                     <input type="text" value="{{ $cari }}" name="cari" placeholder="Cari..."
                         class="form-control " autofocus id="">

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SiswaImport;
 use App\Models\Guru;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class GuruController extends Controller
 {
@@ -104,6 +106,24 @@ class GuruController extends Controller
         return redirect('/guru')->with('success','Berhasil Mengedit Guru');
     }
 
+
+     public function Import()
+    {
+         Request()->validate([
+            'file' => 'required|mimes:xls,xlsx',
+        ], [
+            'file.required' => 'Harap di isi',
+            'file.mimes' => 'Tidak support',
+        ]);
+
+        $file = Request()->file('file');
+        $nama_file = Rand(1, 30) . $file->getClientOriginalName();
+        $file->move(public_path('Excel'), $nama_file);
+
+        Excel::import(new SiswaImport, public_path('Excel/' . $nama_file));
+
+        return redirect()->back()->with('success', 'siswa berhasil diimport');
+    }
     /**
      * Remove the specified resource from storage.
      *

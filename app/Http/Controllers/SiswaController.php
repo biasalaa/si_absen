@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SiswaImport;
 use App\Models\Jurusan;
 use App\Models\Ruangan;
 use App\Models\Siswa;
 use App\Models\Tahun_Ajaran;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -166,15 +168,38 @@ class SiswaController extends Controller
         return redirect('/siswa')->with('success','Berhasil Mengubah Siswa');
     }
 
+
+    public function Import()
+    {
+         Request()->validate([
+            'file' => 'required|mimes:xls,xlsx',
+        ], [
+            'file.required' => 'Harap di isi',
+            'file.mimes' => 'Tidak support',
+        ]);
+
+        $file = Request()->file('file');
+        $nama_file = Rand(1, 30) . $file->getClientOriginalName();
+        $file->move(public_path('Excel'), $nama_file);
+
+        $siswa = new SiswaImport;
+        Excel::import($siswa, public_path('Excel/' . $nama_file));
+        if ($siswa->error()) {
+            return redirect()->back()->with('error', $siswa->pesan());
+        }
+
+        return redirect()->back()->with('success', 'siswa berhasil diimport');
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\User  $User
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $User)
+    public function destroy(Siswa $Siswa)
     {
-        $User->delete();
+        
+        $Siswa->delete();
         return redirect()->back()->with('success', 'Siswa Berhasil Dihapus');
     }
 }
