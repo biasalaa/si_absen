@@ -41,7 +41,7 @@
                                 <tr>
                                     @forelse ($data as $l)
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td> {{ $l->link }} </td>
+                                        <td> {{ $l->url }} </td>
                                         <td>
                                             <div class=" d-flex ">
                                                 <div class="m-1">

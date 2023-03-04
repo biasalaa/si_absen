@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="card-footer text-right">
-                {{ $data->waktus() }}
+                {{ $data->links() }}
             </div>
         </div>
     </div>

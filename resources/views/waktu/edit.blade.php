@@ -9,7 +9,7 @@
 @section('content')
     <div class="section-body">
         <div class="card">
-            <form action="/waktu" method="POST">
+            <form action="/waktu/{{ $data->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="card-body">

@@ -17,7 +17,7 @@ class LinkController extends Controller
         $cari = Request()->cari;
         $data = Link::paginate(20);
         if ($cari) {
-        $data = Link::where('Link','like','%'.$cari)->paginate(20);
+        $data = Link::where('url','like','%'.$cari)->paginate(20);
         }
         return view('link.index',compact('cari', 'data'));
     }
@@ -48,10 +48,9 @@ class LinkController extends Controller
 
         $link = (Request()->link);
 
-
         // insert data to database
-        link::create([
-            'link'=>$link,
+        Link::create([
+            'url'=>$link,
         ]);
 
 
@@ -77,7 +76,6 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        $link = DB::table('link')->where('id',$id)->first();
         return view('link.edit', compact('link'));
     }
 
@@ -90,7 +88,21 @@ class LinkController extends Controller
      */
     public function update(Request $request, Link $link)
     {
-        //
+          Request()->validate(
+            [
+                'link'=>'required',
+            ]
+        );
+
+        $linkData = (Request()->link);
+
+        // insert data to database
+        $link->update([
+            'url'=>$linkData,
+        ]);
+
+
+        return redirect('/link')->with('success','Berhasil Mengedit link');
     }
 
     /**
@@ -102,6 +114,6 @@ class LinkController extends Controller
     public function destroy(Link $link)
     {
         $link->delete();
-        return redirect()->back()->with('success', 'link berhasil di hapus');
+        return redirect()->back()->with('success', 'Link Berhasil Di Hapus');
     }
 }
