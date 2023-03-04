@@ -12,6 +12,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,26 +24,32 @@ use App\Http\Controllers\AbsenController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login',[AuthController::class,'loginUI'])->name('login');
+Route::get('/admin',[AuthController::class,'loginUIAdmin']);
+Route::post('/login',[AuthController::class,'loginSiswa']);
+Route::post('/admin',[AuthController::class,'loginAdmin']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('/', DashboardController::class);
+    Route::resource('/jurusan', JurusanController::class);
+    Route::resource('/siswa', SiswaController::class);
+    Route::resource('/waktu', WaktuController::class);
+    Route::resource('/mapel', MapelController::class);
+    Route::resource('/guru', GuruController::class);
+    Route::resource('/link', LinkController::class);
+    Route::resource('/ruangan', RuanganController::class);
+    Route::resource('/tahun_ajaran', TahunAjaranController::class);
+    Route::resource('/operator', OperatorController::class);
+
+    Route::resource('/absen-siswa', AbsenController::class);
+    Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
+    Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
 
 
-Route::resource('/', DashboardController::class);
-Route::resource('/jurusan', JurusanController::class);
-Route::resource('/siswa', SiswaController::class);
-Route::resource('/waktu', WaktuController::class);
-Route::resource('/mapel', MapelController::class);
-Route::resource('/guru', GuruController::class);
-Route::resource('/link', LinkController::class);
-Route::resource('/ruangan', RuanganController::class);
-Route::resource('/tahun_ajaran', TahunAjaranController::class);
-Route::resource('/operator', OperatorController::class);
+    Route::post('/siswa/s/import',[SiswaController::class,'Import']);
+    Route::post('/guru/g/import',[GuruController::class,'Import']);
+    Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
+    Route::post('/mapel/m/import',[MapelController::class,'Import']);
+    Route::post('/ruangan/r/import',[RuanganController::class,'Import']);
 
-Route::resource('/absen-siswa', AbsenController::class);
-Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
-Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
-
-
-Route::post('/siswa/s/import',[SiswaController::class,'Import']);
-Route::post('/guru/g/import',[GuruController::class,'Import']);
-Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
-Route::post('/mapel/m/import',[MapelController::class,'Import']);
-Route::post('/ruangan/r/import',[RuanganController::class,'Import']);
+});

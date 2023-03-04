@@ -17,7 +17,7 @@ class CreateAbsensTable extends Migration
             $table->id();
             $table->bigInteger('id_siswa')->unsigned();
             $table->integer('id_ajaran')->unsigned();
-            $table->enum('status',['belum hadir','sakit','ijin','alpa']);
+            $table->enum('status',['belum hadir','sakit','ijin','alpa','hadir']);
             $table->timestamps();
             $table->foreign('id_ajaran')->references('id')->on('tahun_ajaran')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_siswa')->references('id')->on('siswa')->onUpdate('cascade')->onDelete('cascade');
