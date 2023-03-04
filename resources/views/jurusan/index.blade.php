@@ -10,7 +10,11 @@
     <div class="section-body">
         <div class="card">
             <div class="card-header" style="justify-content: space-between">
-                <a href="/jurusan/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
+                <div class="">
+                    <a href="/jurusan/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
+                    <button class="btn btn-primary" id="modal-jurusan">Import</button>
+
+                </div>
                 <form action="/jurusan" method="get">
                     <input type="text" value="{{ $cari }}" name="cari" placeholder="Cari..."
                         class="form-control " autofocus id="">
@@ -22,7 +26,17 @@
                         <button class="close" data-dismiss="alert">
                             <span>&times;</span>
                         </button>
-                        {{ session('success') }}
+                        {!! session('success') !!}
+                    </div>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible show fade m-2">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {!! session('error') !!}
                     </div>
                 </div>
             @endif

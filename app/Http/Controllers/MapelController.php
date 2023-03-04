@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\MapelImport;
 use App\Models\Mapel;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class MapelController extends Controller
 {
@@ -105,6 +107,28 @@ class MapelController extends Controller
         return redirect('/mapel')->with('success','Berhasil Mengedit Mapel');
     }
 
+
+     public function Import()
+    {
+         Request()->validate([
+            'file' => 'required|mimes:xls,xlsx',
+        ], [
+            'file.required' => 'Harap di isi',
+            'file.mimes' => 'Tidak support',
+        ]);
+
+        $file = Request()->file('file');
+        $nama_file = Rand(1, 30) . $file->getClientOriginalName();
+        $file->move(public_path('Excel'), $nama_file);
+
+        $mapel = new MapelImport;
+        Excel::import($mapel, public_path('Excel/' . $nama_file));
+        if ($mapel->error()) {
+            return redirect()->back()->with('error', $mapel->pesan());
+        }
+
+        return redirect()->back()->with('success', $mapel->berhasil());
+    }
     /**
      * Remove the specified resource from storage.
      *

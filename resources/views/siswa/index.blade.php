@@ -27,7 +27,17 @@
                         <button class="close" data-dismiss="alert">
                             <span>&times;</span>
                         </button>
-                        {{ session('success') }}
+                        {!! session('success') !!}
+                    </div>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible show fade m-2">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {!! session('error') !!}
                     </div>
                 </div>
             @endif
@@ -73,7 +83,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" align="center">Data Belum Ada</td>
+                                    <td colspan="6" align="center">Data Belum Ada</td>
                                 </tr>
                                 @endforelse
                             </table>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\GuruImport;
 use App\Imports\SiswaImport;
 use App\Models\Guru;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class GuruController extends Controller
          $cari = Request()->cari;
         $data = Guru::paginate(20);
         if ($cari) {
-        $data = Guru::where('nama_guru','like','%'.$cari)->paginate(20);
+        $data = Guru::where('nama_guru','like','%'.$cari."% ")->paginate(20);
         }
         return view('guru.index', compact('data','cari'));
     }
@@ -119,10 +120,12 @@ class GuruController extends Controller
         $file = Request()->file('file');
         $nama_file = Rand(1, 30) . $file->getClientOriginalName();
         $file->move(public_path('Excel'), $nama_file);
-
-        Excel::import(new SiswaImport, public_path('Excel/' . $nama_file));
-
-        return redirect()->back()->with('success', 'siswa berhasil diimport');
+        $guru = new GuruImport;
+        Excel::import($guru, public_path('Excel/' . $nama_file));
+  if ($guru->error()) {
+            return redirect()->back()->with('error', $guru->pesan());
+        }
+        return redirect()->back()->with('success', $guru->berhasil());
     }
     /**
      * Remove the specified resource from storage.

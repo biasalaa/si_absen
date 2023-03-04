@@ -188,7 +188,7 @@ class SiswaController extends Controller
             return redirect()->back()->with('error', $siswa->pesan());
         }
 
-        return redirect()->back()->with('success', 'siswa berhasil diimport');
+        return redirect()->back()->with('success', $siswa->berhasil());
     }
     /**
      * Remove the specified resource from storage.

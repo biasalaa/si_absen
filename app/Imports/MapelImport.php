@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Models\Guru;
+use App\Models\Mapel;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class GuruImport implements ToModel,WithHeadingRow
+class MapelImport implements ToModel,WithHeadingRow
 {
     /**
     * @param array $row
@@ -17,7 +17,7 @@ class GuruImport implements ToModel,WithHeadingRow
 
         $this->error = false;
         $this->pesan = "";
-                $this->berhasil = 0;
+        $this->berhasil = 0;
         $this->gagal = 0;
         $this->total = 0;
 
@@ -25,8 +25,7 @@ class GuruImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         $this->total++;
-
-        $namaData = $row['nama'] ?? null;
+        $namaData = $row['mapel'] ?? null;
   
         if (!$namaData) {
             $this->error = true;
@@ -35,13 +34,16 @@ class GuruImport implements ToModel,WithHeadingRow
         }
 
         $namaData = strtoupper($namaData);
-
+        $cek = Mapel::where('Mapel',$namaData)->first();
+        if($cek){
+            $this->gagal++;
+             return;
+            };
 
 
         $this->berhasil++;
-     
-        return new Guru([
-            'nama_guru' =>  $namaData,
+        return new Mapel([
+            'nama_mapel' =>  $namaData,
           
         ]);
     }
@@ -54,7 +56,7 @@ class GuruImport implements ToModel,WithHeadingRow
     {
         return $this->error;
     }
-     public function berhasil()
+    public function berhasil()
     {
         $this->pesan = "
         <h5>Data Berhasil Diimport</h5>

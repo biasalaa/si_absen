@@ -83,6 +83,57 @@ $("#modal-guru").fireModal({
     },
   ],
 });
+let modal_jurusan_body = "<p>Contoh Format Data Import</p>";
+modal_jurusan_body += "<p class='fw-bold font-weight-bold'>| Jurusan |</p>";
+// modal_jurusan_body += "\n";
+modal_jurusan_body +=
+  "<label class='fw-bold font-weight-bold'>Import Jurusan</label>";
+modal_jurusan_body += `<form class="import" action="/jurusan/j/import" enctype="multipart/form-data" method="post">
+                    <input type="hidden" value="${$('meta[name="_token"]').attr(
+                      "content"
+                    )}" name="_token" id="">
+                    <input type="file" name="file" id="">
+                </form>`;
+
+$("#modal-jurusan").fireModal({
+  title: "Import Data Jurusan",
+  body: modal_jurusan_body,
+  buttons: [
+    {
+      text: "Import",
+      class: "btn btn-primary btn-shadow",
+      handler: function (modal) {
+        $(".import").submit();
+      },
+    },
+  ],
+});
+
+let modal_mapel_body = "<p>Contoh Format Data Import</p>";
+modal_mapel_body += "<p class='fw-bold font-weight-bold'>| Mapel |</p>";
+// modal_mapel_body += "\n";
+modal_mapel_body +=
+  "<label class='fw-bold font-weight-bold'>Import Mapel</label>";
+modal_mapel_body += `<form class="import" action="/mapel/m/import" enctype="multipart/form-data" method="post">
+                    <input type="hidden" value="${$('meta[name="_token"]').attr(
+                      "content"
+                    )}" name="_token" id="">
+                    <input type="file" name="file" id="">
+                </form>`;
+
+$("#modal-mapel").fireModal({
+  title: "Import Data Mapel",
+  body: modal_mapel_body,
+  buttons: [
+    {
+      text: "Import",
+      class: "btn btn-primary btn-shadow",
+      handler: function (modal) {
+        $(".import").submit();
+      },
+    },
+  ],
+});
 
 $("#modal-4").fireModal({
   footerClass: "bg-whitesmoke",

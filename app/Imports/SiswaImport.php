@@ -30,7 +30,9 @@ class SiswaImport implements ToModel,WithHeadingRow
         $this->semester = $semester;
         $this->error = false;
         $this->pesan = "";
-
+        $this->berhasil = 0;
+        $this->gagal = 0;
+        $this->total = 0;
     }
     public function model(array $row)
     {
@@ -41,8 +43,7 @@ class SiswaImport implements ToModel,WithHeadingRow
         $no_kelasData = $row['no_kelas'] ?? null;
         $sesiData = $row['sesi'] ?? null;
         $ruanganData = $row['ruangan'] ?? null;
-
-        if (!$jurusanData && !$namaData && !$nisnData && !$tingkatanData && !$no_kelasData && !$sesiData && !$ruanganData) {
+        if (!$jurusanData || !$namaData || !$nisnData || !$tingkatanData || !$no_kelasData || !$sesiData || !$ruanganData) {
             $this->error = true;
             $this->pesan = "Format Excel Tidak Sesuai";
             return ;
@@ -86,5 +87,16 @@ class SiswaImport implements ToModel,WithHeadingRow
     public function error()
     {
         return $this->error;
+    }
+     public function berhasil()
+    {
+        $this->pesan = "
+        <h5>Data Berhasil Diimport</h5>
+        <ul class='mb-0'>
+        <li>Total Data : $this->total</li>
+        <li>Berhasil : $this->berhasil</li>
+        <li>Gagal : $this->gagal</li>
+        </ul>";
+       return $this->pesan;
     }
 }
