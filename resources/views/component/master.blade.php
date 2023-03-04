@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/components.css">
 
+    <link rel="stylesheet" href="{{ asset('select') }}/dist/css/select2.min.css">
+
 </head>
 
 <body>
@@ -75,6 +77,8 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('template') }}/assets/js/page/index-0.js"></script>
+
+    <script src="{{ asset('select') }}/dist/js/select2.min.js"></script>
 
 </body>
 

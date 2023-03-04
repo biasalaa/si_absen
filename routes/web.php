@@ -49,9 +49,17 @@ Route::get('/absen-siswa', [AbsenController::class,'index']);
 Route::get('/siapkan-ruangan', [AbsenController::class, 'siapkanRuangUi']);
 Route::post('/absenRuang', [AbsenController::class, 'siapkanRuang']);
 Route::get('/filter-absen', [AbsenController::class, 'filterAbsen']);
-Route::post('/updateStatus/{{id}}', [AbsenController::class, 'upStatus']);
+Route::post('/updateStatus/{id}', [AbsenController::class, 'upStatus']);
+
+
+    Route::post('/siswa/s/import',[SiswaController::class,'Import']);
+    Route::post('/guru/g/import',[GuruController::class,'Import']);
+    Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
+    Route::post('/mapel/m/import',[MapelController::class,'Import']);
+    Route::post('/ruangan/r/import',[RuanganController::class,'Import']);
 
 Route::resource('/berita-acara', PrintController::class);
+Route::post('/print-berita', [PrintController::class, 'printBerita']);
 Route::get('/daftar-hadir', [PrintController::class, 'create']);
 
 });
