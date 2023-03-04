@@ -2,34 +2,34 @@
 
 @section('header')
     <div class="section-header">
-        <h1>Ubah Data Waktu</h1>
+        <h1>Tambah Data Ruangan</h1>
     </div>
 @endsection
 
 @section('content')
     <div class="section-body">
         <div class="card">
-            <form action="/waktu/{{ $data->id }}" method="POST">
+            <form action="/ruangan" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-lg-6">
-                            <label>Waktu Awal</label>
-                            <input type="time" name="waktu_awal" value="{{ $data->waktu_awal }}" placeholder="Waktu Awal"
+                            <label>Ruangan </label>
+                            <input type="text" name="nama_ruangan" value="{{ old('nama_ruangan') }}" placeholder="Ruangan"
                                 class="form-control">
-                            @error('waktu_awal')
+                            @error('nama_ruangan')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
                         <div class="form-group col-lg-6">
-                            <label>Waktu Akhir</label>
-                            <input type="time" name="waktu_akhir" value="{{ $data->waktu_akhir }}"
-                                placeholder="Waktu Awal" class="form-control">
-                            @error('waktu_akhir')
+                            <label>Nama Teknisi</label>
+                            <input type="text" name="nama_teknisi" value="{{ old('nama_teknisi') }}"
+                                placeholder="Nama Teknisi" class="form-control">
+                            @error('nama_teknisi')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+
                     </div>
 
 

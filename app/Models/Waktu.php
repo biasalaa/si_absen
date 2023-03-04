@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Waktu extends Model
 {
     use HasFactory;
-        protected $table = "waktu";
+    protected $table = "waktu";
     protected $fillable = ['waktu_awal','waktu_akhir'];
 }

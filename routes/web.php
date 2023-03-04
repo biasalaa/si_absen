@@ -45,3 +45,4 @@ Route::post('/siswa/s/import',[SiswaController::class,'Import']);
 Route::post('/guru/g/import',[GuruController::class,'Import']);
 Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
 Route::post('/mapel/m/import',[MapelController::class,'Import']);
+Route::post('/ruangan/r/import',[RuanganController::class,'Import']);
