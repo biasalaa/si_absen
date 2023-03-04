@@ -135,6 +135,32 @@ $("#modal-mapel").fireModal({
   ],
 });
 
+let modal_ruangan_body = "<p>Contoh Format Data Import</p>";
+modal_ruangan_body += "<p class='fw-bold font-weight-bold'>| Mapel |</p>";
+// modal_ruangan_body += "\n";
+modal_ruangan_body +=
+  "<label class='fw-bold font-weight-bold'>Import Ruangan</label>";
+modal_ruangan_body += `<form class="import" action="/ruangan/r/import" enctype="multipart/form-data" method="post">
+                    <input type="hidden" value="${$('meta[name="_token"]').attr(
+                      "content"
+                    )}" name="_token" id="">
+                    <input type="file" name="file" id="">
+                </form>`;
+
+$("#modal-ruangan").fireModal({
+  title: "Import Data Mapel",
+  body: modal_ruangan_body,
+  buttons: [
+    {
+      text: "Import",
+      class: "btn btn-primary btn-shadow",
+      handler: function (modal) {
+        $(".import").submit();
+      },
+    },
+  ],
+});
+
 $("#modal-4").fireModal({
   footerClass: "bg-whitesmoke",
   body: "Add the <code>bg-whitesmoke</code> class to the <code>footerClass</code> option.",

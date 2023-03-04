@@ -48,11 +48,15 @@
                 <span>Operator</span></a>
         </li>
 
-        <li class="menu-header">Setting</li>
         <li class="nav-item dropdown">
             <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
                 <span>Mapel</span></a>
         </li>
+        <li class="nav-item dropdown">
+            <a href="/ruangan" class="nav-link "><i class="fas fa-th-large"></i>
+                <span>Ruangan</span></a>
+        </li>
+        <li class="menu-header">Setting</li>
         <li class="nav-item dropdown">
             <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>
                 <span>Link</span></a>
