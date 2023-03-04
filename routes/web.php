@@ -12,6 +12,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\PrintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::resource('/absen-siswa', AbsenController::class);
 Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
 Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
 
+Route::resource('/berita-acara', PrintController::class);
+Route::get('/daftar-hadir', [PrintController::class, 'create']);
 
 Route::post('/siswa/s/import',[SiswaController::class,'Import']);
 Route::post('/guru/g/import',[GuruController::class,'Import']);
