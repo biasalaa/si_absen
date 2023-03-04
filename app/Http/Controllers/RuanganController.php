@@ -6,6 +6,7 @@ use App\Imports\RuanganImport;
 use App\Models\Ruangan;
 use App\Models\Tahun_Ajaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class RuanganController extends Controller
@@ -152,6 +153,8 @@ class RuanganController extends Controller
         if ($Ruangan->error()) {
             return redirect()->back()->with('error', $Ruangan->pesan());
         }
+
+        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $Ruangan->berhasil());
     }

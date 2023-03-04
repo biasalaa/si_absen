@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\MapelImport;
 use App\Models\Mapel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class MapelController extends Controller
@@ -126,6 +127,7 @@ class MapelController extends Controller
         if ($mapel->error()) {
             return redirect()->back()->with('error', $mapel->pesan());
         }
+        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $mapel->berhasil());
     }

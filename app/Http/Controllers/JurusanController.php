@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\JurusanImport;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class JurusanController extends Controller
@@ -125,6 +126,8 @@ class JurusanController extends Controller
         if ($jurusan->error()) {
             return redirect()->back()->with('error', $jurusan->pesan());
         }
+
+        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $jurusan->berhasil());
     }

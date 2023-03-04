@@ -6,6 +6,7 @@ use App\Imports\GuruImport;
 use App\Imports\SiswaImport;
 use App\Models\Guru;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class GuruController extends Controller
@@ -125,6 +126,8 @@ class GuruController extends Controller
   if ($guru->error()) {
             return redirect()->back()->with('error', $guru->pesan());
         }
+        File::delete(public_path('Excel/' . $nama_file));
+
         return redirect()->back()->with('success', $guru->berhasil());
     }
     /**

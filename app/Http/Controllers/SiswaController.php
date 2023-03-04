@@ -8,6 +8,7 @@ use App\Models\Ruangan;
 use App\Models\Siswa;
 use App\Models\Tahun_Ajaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
@@ -187,6 +188,7 @@ class SiswaController extends Controller
         if ($siswa->error()) {
             return redirect()->back()->with('error', $siswa->pesan());
         }
+        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $siswa->berhasil());
     }
