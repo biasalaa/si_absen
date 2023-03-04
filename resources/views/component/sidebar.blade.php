@@ -23,7 +23,7 @@
                 <span>Siapkan Ruangan</span></a>
         </li>
         <li class="nav-item dropdown">
-            <a href="#" class="nav-link "><i class="far fa-file-alt"></i>
+            <a href="/absen-siswa" class="nav-link "><i class="far fa-file-alt"></i>
                 <span>Absensi Siswa</span></a>
         </li>
 

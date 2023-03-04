@@ -108,6 +108,73 @@ $("#modal-jurusan").fireModal({
     },
   ],
 });
+let modal_absen_body = "<h4>Mengubah Status {{$d->nama_siswa}}</h4>";
+modal_absen_body += "<p class='fw-bold font-weight-bold'>| absen |</p>";
+// modal_absen_body += "\n";
+modal_absen_body += `<form action="/updateStatus/{{$d->id_siswa}}" method="post">
+<div class="form-group d-flex" style="gap:20px">
+                                                                    <div class="custom-control custom-radio">
+                                                                        <label>
+                                                                            <input class="with-gap" name="status"
+                                                                                id="alpha" value="1"
+                                                                                type="radio" checked />
+                                                                            <span for="alpha">hadir</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <label>
+                                                                            <input class="with-gap" name="status"
+                                                                                id="belum hadir" value="5"
+                                                                                type="radio" checked />
+                                                                            <span for="alpha">belum hadir</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <label>
+                                                                            <input class="with-gap" name="status"
+                                                                                id="alpha" value="4"
+                                                                                type="radio" checked />
+                                                                            <span for="alpha">Alpha</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <label>
+                                                                            <input class="with-gap" name="status"
+                                                                                id="sakit" value="2"
+                                                                                type="radio" />
+                                                                            <span for="sakit">Sakit</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <label>
+                                                                            <input class="with-gap" name="status"
+                                                                                id="ijin" value="3"
+                                                                                type="radio" />
+                                                                            <span for="ijin">Ijin</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                     </form`
+modal_absen_body += `<form class="import" action="/absen/j/import" enctype="multipart/form-data" method="post">
+                    <input type="hidden" value="${$('meta[name="_token"]').attr(
+                      "content"
+                    )}" name="_token" id="">
+                    <input type="file" name="file" id="">
+                </form>`;
+
+$("#modal-absen/{{ $d->id }}").fireModal({
+  title: "Ubah Data",
+  body: modal_absen_body,
+  buttons: [
+    {
+      text: "Import",
+      class: "btn btn-primary btn-shadow",
+      handler: function (modal) {
+        $(".import").submit();
+      },
+    },
+  ],
+});
 
 let modal_mapel_body = "<p>Contoh Format Data Import</p>";
 modal_mapel_body += "<p class='fw-bold font-weight-bold'>| Mapel |</p>";

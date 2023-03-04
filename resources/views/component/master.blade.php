@@ -23,6 +23,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/components.css">
+
 </head>
 
 <body>
@@ -74,6 +75,7 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('template') }}/assets/js/page/index-0.js"></script>
+
 </body>
 
 </html>
