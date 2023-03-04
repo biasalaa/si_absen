@@ -48,7 +48,8 @@ class AbsenController extends Controller
       
 
         if($cek != 0){
-        return redirect()->back()->with('error', 'Ruangan tidak ditemukan');
+        return  redirect('/absen-siswa')->with('error', 'Ruangan Sudah Terdaftar');
+            
         }elseif($cek == 0){
               $month = date('m');
                 if($month <= '06'){
@@ -69,7 +70,6 @@ class AbsenController extends Controller
                     'id_ajaran'=>$id_ajaran
                 ]);
         }
-
         return  redirect('/absen-siswa')->with('success', 'Ruangan berhasil di siapkan');
         }
         else{
