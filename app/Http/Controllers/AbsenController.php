@@ -117,7 +117,7 @@ class AbsenController extends Controller
             foreach ($data as $d ) {
 
 
-            $ds = Absen::where('id_siswa',$d->id_siswa)->update([
+            $ds = Absen::where('id',$d->id)->update([
                 "status" => 'hadir',
             ]);
 
@@ -143,7 +143,7 @@ class AbsenController extends Controller
             ]
         );
 
-                Absen::where('id_siswa',$id)->update([
+                Absen::where('id',$id)->update([
                 "status" => $request->status,
             ]);
 

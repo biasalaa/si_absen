@@ -112,7 +112,7 @@ $("#modal-jurusan").fireModal({
 function updateStatus(id, nama, status) {
   let modal_absen_body = `<h6>Mengubah Status ${nama}</h6> `;
   // modal_absen_body += "\n";
-  modal_absen_body += `<form action="/updateStatus/${id}" method="post">
+  modal_absen_body += `<form class="update-status" action="/updateStatus/${id}" method="post">
     <input type="hidden" value="${$('meta[name="_token"]').attr(
       "content"
     )}" name="_token" id="">
@@ -199,7 +199,7 @@ function updateStatus(id, nama, status) {
         text: "Import",
         class: "btn btn-primary btn-shadow",
         handler: function (modal) {
-          $(".import").submit();
+          $(".update-status").submit();
         },
       },
     ],
