@@ -14,7 +14,12 @@ class LinkController extends Controller
      */
     public function index()
     {
-        //
+        $cari = Request()->cari;
+        $data = Link::paginate(20);
+        if ($cari) {
+        $data = Link::where('Link','like','%'.$cari)->paginate(20);
+        }
+        return view('link.index',compact('cari', 'data'));
     }
 
     /**
@@ -24,7 +29,7 @@ class LinkController extends Controller
      */
     public function create()
     {
-        //
+        return view('link.create');
     }
 
     /**
@@ -35,7 +40,22 @@ class LinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Request()->validate(
+            [
+                'link'=>'required',
+            ]
+        );
+
+        $link = (Request()->link);
+
+
+        // insert data to database
+        link::create([
+            'link'=>$link,
+        ]);
+
+
+        return redirect('/link')->with('success','Berhasil Menambah link');
     }
 
     /**
@@ -57,7 +77,8 @@ class LinkController extends Controller
      */
     public function edit(Link $link)
     {
-        //
+        $link = DB::table('link')->where('id',$id)->first();
+        return view('link.edit', compact('link'));
     }
 
     /**
@@ -80,6 +101,7 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
-        //
+        $link->delete();
+        return redirect()->back()->with('success', 'link berhasil di hapus');
     }
 }

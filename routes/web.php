@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::resource('/jurusan', JurusanController::class);
 Route::resource('/siswa', SiswaController::class);
+Route::resource('/waktu', WaktuController::class);
 Route::resource('/mapel', MapelController::class);
 Route::resource('/guru', GuruController::class);
 Route::resource('/link', LinkController::class);

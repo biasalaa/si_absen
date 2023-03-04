@@ -9,5 +9,5 @@ class Link extends Model
 {
     use HasFactory;
       protected $table = "link";
-    protected $fillable = ['url'];
+    protected $fillable = ['link'];
 }

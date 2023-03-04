@@ -14,7 +14,12 @@ class WaktuController extends Controller
      */
     public function index()
     {
-        //
+        $cari = Request()->cari;
+        $data = Waktu::paginate(20);
+        if ($cari) {
+        $data = Waktu::where('waktu_awal','like','%'.$cari)->paginate(20);
+        }
+        return view('waktu.index',compact('cari', 'data'));
     }
 
     /**
@@ -24,7 +29,7 @@ class WaktuController extends Controller
      */
     public function create()
     {
-        //
+        return view('waktu.create');
     }
 
     /**
@@ -35,7 +40,25 @@ class WaktuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Request()->validate(
+            [
+                'waktu_awal'=>'required',
+                'waktu_akhir'=>'required',
+            ]
+        );
+
+        $waktu_awal = (Request()->waktu_awal);
+        $waktu_akhir = (Request()->waktu_akhir);
+
+
+        // insert data to database
+        Waktu::create([
+            'waktu_awal'=>$waktu_awal,
+            'waktu_akhir'=>$waktu_akhir,
+        ]);
+
+
+        return redirect('/waktu')->with('success','Berhasil Menambah waktu');
     }
 
     /**
@@ -57,7 +80,8 @@ class WaktuController extends Controller
      */
     public function edit(Waktu $waktu)
     {
-        //
+         $data = $waktu;
+        return view('waktu.edit', compact('data'));
     }
 
     /**
@@ -69,7 +93,25 @@ class WaktuController extends Controller
      */
     public function update(Request $request, Waktu $waktu)
     {
-        //
+        Request()->validate(
+            [
+                'waktu_awal'=>'required',
+                'waktu_akhir'=>'required',
+            ],
+            [
+                'waktu_awal.required'=>'Waktu Awal Wajib Diisi',
+                'waktu_akhir.required'=>'Waktu Akhir Wajib Diisi'
+            ]
+        );
+        $waktu_awal = (Request()->waktu_awal);
+        $waktu_akhir = (Request()->waktu_akhir);
+        // update data to database
+        $waktu->update([
+            'waktu_awal'=>$waktu_awal,
+            'waktu_akhir'=>$waktu_akhir,
+        ]);
+
+        return redirect('/waktu')->with('success','Berhasil Mengedit Waktu');
     }
 
     /**
@@ -80,6 +122,7 @@ class WaktuController extends Controller
      */
     public function destroy(Waktu $waktu)
     {
-        //
+        $waktu->delete();
+        return redirect()->back()->with('success', 'Waktu Berhasil Dihapus');
     }
 }
