@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\JurusanImport;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Str;
 class JurusanController extends Controller
 {
@@ -104,6 +106,28 @@ class JurusanController extends Controller
         return redirect('/jurusan')->with('success','Berhasil Mengedit Jurusan');
     }
 
+
+     public function Import()
+    {
+         Request()->validate([
+            'file' => 'required|mimes:xls,xlsx',
+        ], [
+            'file.required' => 'Harap di isi',
+            'file.mimes' => 'Tidak support',
+        ]);
+
+        $file = Request()->file('file');
+        $nama_file = Rand(1, 30) . $file->getClientOriginalName();
+        $file->move(public_path('Excel'), $nama_file);
+
+        $jurusan = new JurusanImport;
+        Excel::import($jurusan, public_path('Excel/' . $nama_file));
+        if ($jurusan->error()) {
+            return redirect()->back()->with('error', $jurusan->pesan());
+        }
+
+        return redirect()->back()->with('success', $jurusan->berhasil());
+    }
     /**
      * Remove the specified resource from storage.
      *
