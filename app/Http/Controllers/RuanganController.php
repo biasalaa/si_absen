@@ -150,11 +150,11 @@ class RuanganController extends Controller
 
         $Ruangan = new RuanganImport;
         Excel::import($Ruangan, public_path('Excel/' . $nama_file));
+        File::delete(public_path('Excel/' . $nama_file));
         if ($Ruangan->error()) {
             return redirect()->back()->with('error', $Ruangan->pesan());
         }
 
-        File::delete(public_path('Excel/' . $nama_file));
 
         return redirect()->back()->with('success', $Ruangan->berhasil());
     }
