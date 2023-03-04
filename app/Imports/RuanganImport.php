@@ -25,8 +25,8 @@ class RuanganImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
         $this->total++;
-        $namaData = $row['nama_ruangan'] ?? null;
-        $teknisiData = $row['nama_teknisi'] ?? null;
+        $namaData = $row['ruangan'] ?? null;
+        $teknisiData = $row['teknisi'] ?? null;
   
         if (!$namaData || !$teknisiData) {
             $this->error = true;
@@ -38,9 +38,24 @@ class RuanganImport implements ToModel,WithHeadingRow
 
 
         $this->berhasil++;
+         $no_ruangan = Ruangan::count()+1;
+        // insert data to database
+         $month = date('m');
+        if($month <= '06'){
+            $tahun = date('Y',strtotime("-1 Year"))."/".date('Y');;
+            $semester = "genap";
+        }else{
+             $tahun = date('Y')."/".date('Y',strtotime("+1 year"));
+            $semester = "ganjil";
+        }
+        $id_ajaran = Tahun_Ajaran::where('tahun',$tahun)->where('semester',$semester)->first()->id;
+
+        if(!$id_ajaran)return;
         return new Ruangan([
             'nama_ruangan' =>  $namaData,
             'nama_teknisi' =>  $teknisiData,
+            'no_ruangan'=>$no_ruangan,
+            'id_ajaran'=>$id_ajaran,
           
         ]);
     }

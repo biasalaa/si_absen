@@ -136,7 +136,8 @@ $("#modal-mapel").fireModal({
 });
 
 let modal_ruangan_body = "<p>Contoh Format Data Import</p>";
-modal_ruangan_body += "<p class='fw-bold font-weight-bold'>| Mapel |</p>";
+modal_ruangan_body +=
+  "<p class='fw-bold font-weight-bold'>| Ruangan | Teknisi | </p>";
 // modal_ruangan_body += "\n";
 modal_ruangan_body +=
   "<label class='fw-bold font-weight-bold'>Import Ruangan</label>";

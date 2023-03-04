@@ -12,7 +12,7 @@
             <div class="card-header" style="justify-content: space-between">
                 <div class="">
                     <a href="{{ Request()->url() }}/create" class="btn btn-success" style="color:white ;">Tambah Data</a>
-                    <button class="btn btn-primary" id="modal-siswa">Import</button>
+                    <button class="btn btn-primary" id="modal-ruangan">Import</button>
                 </div>
 
 
