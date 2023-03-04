@@ -14,11 +14,8 @@
         </li>
 
         <li class="menu-header">Print</li>
-        <li class="nav-item dropdown">
-            <a href="#" class="nav-link" data-toggle="dropdown"><i class="fas fa-print"></i>
-                <span>Berita Acara</span></a>
-        </li>
-        <li><a class="nav-link" href="blank.html"><i class="fas fa-print"></i> <span>Daftar Hadir</span></a></li>
+        <li><a class="nav-link" href="/berita-acara"><i class="fas fa-print"></i> <span>Berita Acara</span></a></li>
+        <li><a class="nav-link" href="/daftar-hadir"><i class="fas fa-print"></i> <span>Daftar Hadir</span></a></li>
 
         <li class="menu-header">Absen</li>
         <li class="nav-item dropdown">

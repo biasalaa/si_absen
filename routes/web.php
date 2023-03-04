@@ -13,6 +13,7 @@ use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PrintController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,5 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
     Route::post('/mapel/m/import',[MapelController::class,'Import']);
     Route::post('/ruangan/r/import',[RuanganController::class,'Import']);
+Route::resource('/berita-acara', PrintController::class);
+Route::get('/daftar-hadir', [PrintController::class, 'create']);
 
 });
