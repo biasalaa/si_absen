@@ -57,7 +57,7 @@
                                 <tr>
                                     @forelse ($data as $j)
                                         <th scope="row">{{ $loop->iteration }}</th>
-                                        <td> {{ $j->nama_siswa }} </td>
+                                        <td> {{ $j->nama }} </td>
                                         <td> {{ $j->nisn }} </td>
                                         <td> {{ $j->tingkatan }} {{ $j->jurusan->jurusan }} {{ $j->no_kelas }} </td>
                                         <td> {{ $j->sesi }} </td>

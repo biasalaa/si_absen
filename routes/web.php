@@ -11,6 +11,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\WaktuController;
+use App\Http\Controllers\AbsenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +34,13 @@ Route::resource('/guru', GuruController::class);
 Route::resource('/link', LinkController::class);
 Route::resource('/ruangan', RuanganController::class);
 Route::resource('/tahun_ajaran', TahunAjaranController::class);
-Route::resource('/absen-siswa', AbsenController::class);
-Route::resource('/siapkan-ruangan', AbsenController::class);
 Route::resource('/operator', OperatorController::class);
+
+Route::resource('/absen-siswa', AbsenController::class);
+Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
+Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
+
+
 Route::post('/siswa/s/import',[SiswaController::class,'Import']);
 Route::post('/guru/g/import',[GuruController::class,'Import']);
 Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
