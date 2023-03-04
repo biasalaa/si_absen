@@ -10,7 +10,7 @@
     <div class="section-body">
         <div class="card">
             <div class="card-body">
-                <form action="">
+                <form action="/print-berita" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-lg-5">
@@ -32,11 +32,12 @@
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label>Pengawas Ujian</label>
-                                <select class="form-control    js-select" name="guru">
+                                <select class="form-control    js-select" name="nama_guru">
                                     <option value="">Pilih Disini</option>
                                     @foreach ($guru as $g)
-                                        <option {{ old('guru') == $g->id ? 'selected' : '' }} value="{{ $g->id }}">
-                                            {{ $g->guru }}</option Required>
+                                        <option {{ old('nama_guru') == $g->id ? 'selected' : '' }}
+                                            value="{{ $g->id }}">
+                                            {{ $g->nama_guru }}</option Required>
                                     @endforeach
                                 </select>
                                 @error('guru')

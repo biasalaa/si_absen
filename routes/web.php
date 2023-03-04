@@ -47,7 +47,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
 
 
-<<<<<<< HEAD
 Route::resource('/', DashboardController::class);
 Route::resource('/jurusan', JurusanController::class);
 Route::resource('/siswa', SiswaController::class);
@@ -65,14 +64,15 @@ Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
 Route::get('/filter-absen', [AbsenController::class, 'create']);
 Route::post('/updateStatus/{{id}}', [AbsenController::class, 'upStatus']);
 
-=======
+
     Route::post('/siswa/s/import',[SiswaController::class,'Import']);
     Route::post('/guru/g/import',[GuruController::class,'Import']);
     Route::post('/jurusan/j/import',[JurusanController::class,'Import']);
     Route::post('/mapel/m/import',[MapelController::class,'Import']);
     Route::post('/ruangan/r/import',[RuanganController::class,'Import']);
->>>>>>> be55f21cacd418a4e51707b6ad5dde4ad631bfa7
+
 Route::resource('/berita-acara', PrintController::class);
+Route::post('/print-berita', [PrintController::class, 'printBerita']);
 Route::get('/daftar-hadir', [PrintController::class, 'create']);
 
 });
