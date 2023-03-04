@@ -40,6 +40,8 @@ Route::resource('/operator', OperatorController::class);
 Route::resource('/absen-siswa', AbsenController::class);
 Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
 Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
+Route::get('/filter-absen', [AbsenController::class, 'create']);
+Route::post('/updateStatus/{{id}}', [AbsenController::class, 'upStatus']);
 
 Route::resource('/berita-acara', PrintController::class);
 Route::get('/daftar-hadir', [PrintController::class, 'create']);

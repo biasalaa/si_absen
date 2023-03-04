@@ -9,6 +9,7 @@ use App\Models\Tahun_Ajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Pagination\Paginator;
 
 class AbsenController extends Controller
 {
@@ -19,13 +20,24 @@ class AbsenController extends Controller
      */
     public function index()
     {
-        //
+        Paginator::useBootstrap();
+        $siswa = DB::table('siswa')
+            ->select('jurusan', 'siswa.*', 'nama_ruangan')
+            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
+            ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
+            ->simplePaginate(10);
+        $jurusan = DB::table('jurusan')->get();
+        $ruang = DB::table('ruangan')->get();
+        $data = [];
+        return view('absen.absensi', compact('siswa', 'jurusan', 'ruang','data'));
     }
 
     public function AbsenRuangUi(){
     $ruangan = Ruangan::all();
         return view('absen.siapkanRuangan',compact('ruangan'));
     }
+
+
     public function AbsenRuang(Request $request)
     {
         $request->validate([
@@ -45,11 +57,11 @@ class AbsenController extends Controller
         ->whereDate('created_at',date('Y-m-d'))
         ->count()
         ;
-      
+
 
         if($cek != 0){
         return  redirect('/absen-siswa')->with('error', 'Ruangan Sudah Terdaftar');
-            
+
         }elseif($cek == 0){
               $month = date('m');
                 if($month <= '06'){
@@ -62,7 +74,7 @@ class AbsenController extends Controller
                 $id_ajaran = Tahun_Ajaran::where('tahun',$tahun)->where('semester',$semester)->first()->id;
 
                 if(!$id_ajaran)return;
-        
+
             foreach ($siswa as $r ) {
                 Absen::create([
                     'id_siswa'=>$r->id,
@@ -82,9 +94,67 @@ class AbsenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // dd('s');
+        $absen = Absen::all();
+        $siswa = DB::table('siswa')
+            ->select('siswa.*', 'jurusan')
+            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
+            ->get();
+
+        $data = DB::table('absen')
+            ->rightJoin('siswa', 'absen.id_siswa', 'siswa.id')
+            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
+            ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
+            ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan','siswa.id as id_siswa', 'sesi', 'nama_ruangan')
+            ->where('ruangan.id',$request->ruangan)
+            ->where('siswa.sesi',$request->sesi)
+            ->whereDate('absen.created_at',$request->waktu)
+            ->get();
+
+        $jurusan = DB::table('jurusan')->get();
+        $ruang = DB::table('ruangan')->get();
+
+
+        // hadirkan semua
+        if (Request()->has('hadirsemua')) {
+            try {
+            foreach ($data as $d ) {
+
+
+            $ds = DB::table('absen')->where('id_siswa',$d->id_siswa)->update([
+                "status" => 'hadir',
+            ]);
+
+            }
+            return redirect()->back()->with('success','Berhasil menghadirkan siswa');
+        } catch (\Throwable $th) {
+            dd('error');
+        }
+        }
+
+
+
+        return view('absen.absensi', compact('jurusan', 'data','ruang'));
+    }
+
+    public function upStatus(Request $request,$id){
+        $request->validate(
+            [
+                'status' => 'required'
+            ],
+            [
+                'status.required' => 'status wajib di isi'
+            ]
+        );
+
+                DB::table('absen')->where('id_siswa',$id)->update([
+                "status" => $request->status,
+            ]);
+
+
+        return redirect()->back()->with('success', 'status berhasil di edit');
     }
 
     /**
