@@ -23,4 +23,8 @@ class Absen extends Model
     {
         return $this->belongsTo(Tahun_Ajaran::class,'id_ajaran');
     }
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class,'id_siswa');
+    }
 }

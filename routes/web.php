@@ -30,7 +30,7 @@ Route::get('/admin',[AuthController::class,'loginUIAdmin']);
 Route::post('/login',[AuthController::class,'loginSiswa']);
 Route::post('/admin',[AuthController::class,'loginAdmin']);
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {    
     Route::resource('/', DashboardController::class);
     Route::resource('/jurusan', JurusanController::class);
     Route::resource('/siswa', SiswaController::class);
@@ -42,27 +42,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/tahun_ajaran', TahunAjaranController::class);
     Route::resource('/operator', OperatorController::class);
 
-    Route::resource('/absen-siswa', AbsenController::class);
-    Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
-    Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
 
 
-Route::resource('/', DashboardController::class);
-Route::resource('/jurusan', JurusanController::class);
-Route::resource('/siswa', SiswaController::class);
-Route::resource('/waktu', WaktuController::class);
-Route::resource('/mapel', MapelController::class);
-Route::resource('/guru', GuruController::class);
-Route::resource('/link', LinkController::class);
-Route::resource('/ruangan', RuanganController::class);
-Route::resource('/tahun_ajaran', TahunAjaranController::class);
-Route::resource('/operator', OperatorController::class);
 
-Route::resource('/absen-siswa', AbsenController::class);
-Route::get('/siapkan-ruangan', [AbsenController::class, 'AbsenRuangUi']);
-Route::post('/absenRuang', [AbsenController::class, 'AbsenRuang']);
-Route::get('/filter-absen', [AbsenController::class, 'create']);
-Route::post('/updateStatus/{{id}}', [AbsenController::class, 'upStatus']);
+Route::get('/absen-siswa', [AbsenController::class,'index']);
+Route::get('/siapkan-ruangan', [AbsenController::class, 'siapkanRuangUi']);
+Route::post('/absenRuang', [AbsenController::class, 'siapkanRuang']);
+Route::get('/filter-absen', [AbsenController::class, 'filterAbsen']);
+Route::post('/updateStatus/{id}', [AbsenController::class, 'upStatus']);
 
 
     Route::post('/siswa/s/import',[SiswaController::class,'Import']);

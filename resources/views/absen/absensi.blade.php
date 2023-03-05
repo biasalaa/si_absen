@@ -49,7 +49,7 @@
                         <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Pilih Waktu</label>
-                                <input type="date" name="waktu">
+                                <input type="date" class="form-control" name="waktu">
                             </div>
                         </div>
 
@@ -96,17 +96,21 @@
                                 @foreach ($data as $d)
                                     <tr>
                                         <td>{{ $no++ }}</td>
-                                        <td>{{ $d->nama_siswa }}</td>
-                                        <td>{{ $d->nisn }}</td>
-                                        <td>{{ $d->tingkatan }} {{ $d->jurusan }} {{ $d->no_kelas }}</td>
+                                        <td>{{ $d->siswa->nama_siswa }}</td>
+                                        <td>{{ $d->siswa->nisn }}</td>
+                                        <td>{{ $d->siswa->tingkatan }} {{ $d->siswa->jurusan->jurusan }}
+                                            {{ $d->siswa->no_kelas }}
+                                        </td>
                                         <td>{{ $d->sesi }}</td>
-                                        <td>{{ $d->nama_ruangan }}</td>
+                                        <td>{{ $d->siswa->ruangan->nama_ruangan }}</td>
                                         <td><b style="color: rebeccapurple;font-weight: 900">{{ $d->status }}</b>
                                         </td>
 
 
-                                        <td class="d-flex justify-content-evenly">
-                                            <button class="btn btn-primary" id="modal-absen/{{ $d->id }}"><i
+                                        <td class="">
+                                            <button
+                                                onclick="updateStatus({{ $d->id }},'{{ $d->siswa->nama_siswa }}','{{ $d->status }}')"
+                                                class="btn btn-primary" id="modal-absen-{{ $d->id }}"><i
                                                     class="fas fa-pen"></i></button>
                                         </td>
                                     </tr>
