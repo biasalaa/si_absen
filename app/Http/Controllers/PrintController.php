@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use PDF;
 
 class PrintController extends Controller
 {
@@ -50,7 +51,6 @@ class PrintController extends Controller
 
     public function printBerita(Request $request)
     {
-        // dd($request);
         $request->validate([
             'ruangan'=>'required',
             'sesi'=>'required',
@@ -64,7 +64,9 @@ class PrintController extends Controller
             'nama_guru.required' => 'Pengawas tidak boleh kosong',
             'mapel1.required' => 'mapel1 tidak boleh kosong',
             'mapel.required' => 'mapel tidak boleh kosong',
+            'waktu.required' => 'waktu tidak boleh kosong',
         ]);
+        // dd('s');
         $siswa = DB::table('siswa')
             ->select('siswa.*', 'jurusan')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
@@ -75,10 +77,10 @@ class PrintController extends Controller
             ->join('siswa', 'absen.id_siswa', 'siswa.id')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
             ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan', 'nama_ruangan', 'no_ruangan', 'teknisi', 'sesi')
+            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
             ->where('siswa.id_ruangan', $request->ruangan)
             ->where('siswa.sesi', $request->sesi)
-            ->whereDate('absen.waktu',date('Y-m-d'))
+            ->whereDate('absen.created_at',date('Y-m-d'))
 
             // ->groupBy('siswa.id')
             ->count();
@@ -89,7 +91,7 @@ class PrintController extends Controller
             ->where('siswa.id_ruangan', $request->ruangan)
             ->where('siswa.sesi', $request->sesi)
             ->where('status','hadir')
-            ->whereDate('absen.waktu',date('Y-m-d'))
+            ->whereDate('absen.created_at',date('Y-m-d'))
             ->count();
 
              $nohadir = DB::table('absen')
@@ -99,17 +101,17 @@ class PrintController extends Controller
             ->where('siswa.id_ruangan', $request->ruangan)
             ->where('siswa.sesi', $request->sesi)
             ->where('status','!=','hadir')
-            ->whereDate('absen.waktu',date('Y-m-d'))
+            ->whereDate('absen.created_at',date('Y-m-d'))
             ->get();
 
             $all1 = DB::table('absen')
             ->join('siswa', 'absen.id_siswa', 'siswa.id')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
             ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan', 'nama_ruangan', 'no_ruangan', 'teknisi', 'sesi')
+            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
             ->where('siswa.id_ruangan', $request->ruangan)
             ->where('siswa.sesi', $request->sesi)
-            ->whereDate('absen.waktu',date('Y-m-d'))
+            ->whereDate('absen.created_at',date('Y-m-d'))
             ->get();
 
             $hadir1 = DB::table('absen')
