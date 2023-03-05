@@ -8,11 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-<<<<<<< HEAD
-        "php": "^7.3||^8.0",
-=======
         "php": "^7.3||^8.2",
->>>>>>> e85771f9c65145aa847dfaf2788a51761602df97
         "barryvdh/laravel-dompdf": "^2.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
@@ -20,11 +16,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "maatwebsite/excel": "^3.1",
-<<<<<<< HEAD
-        "milon/barcode": "^9.0"
-=======
-        "milon/barcode": "^10.0"
->>>>>>> e85771f9c65145aa847dfaf2788a51761602df97
+        "milon/barcode": "^10.0" 
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

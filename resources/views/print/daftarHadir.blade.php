@@ -16,8 +16,8 @@
 
                         <div class="col-lg-5">
                             <div class="form-group">
-                                <label>Pengawas Ujian</label>
-                                <input type="date" name="waktu">
+                                <label>Pilih Tanggal</label>
+                                <input type="date" class="form-control" name="waktu">
                                 @error('guru')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror

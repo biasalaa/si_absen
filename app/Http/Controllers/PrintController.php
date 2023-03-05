@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use PDF;
+use Dompdf\Dompdf;
+
+use App\Models\Absen;
+use App\Models\Jurusan;
+use App\Models\Ruangan;
+use App\Models\Siswa;
+use App\Models\Tahun_Ajaran;
 
 class PrintController extends Controller
 {
@@ -21,14 +28,14 @@ class PrintController extends Controller
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
             ->get();
             // dd($request);
-        $data = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan')
-            ->where('siswa.kelas', $request->kelas)
-            ->orWhere('siswa.no_kelas', $request->no_kelas)
-            ->orWhere('jurusan.jurusan', $request->jurusan)
+        $data = Absen::
+            whereHas('siswa',function($query)use($request)
+            {
+                $query->where('tingkatan',Request()->kelas);
+                $query->orWhere('no_kelas',Request()->no_kelas);
+            })
             ->get();
+
         $waktu = DB::table('waktu')->orderBy('waktu_awal','asc')->get();
 
         $ruangan = DB::table('ruangan')->get();
@@ -66,71 +73,68 @@ class PrintController extends Controller
             'mapel.required' => 'mapel tidak boleh kosong',
             'waktu.required' => 'waktu tidak boleh kosong',
         ]);
-        // dd('s');
-        $siswa = DB::table('siswa')
-            ->select('siswa.*', 'jurusan')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
+        $siswa = Siswa::all();
+        // dd($request);
+            $all = Absen::
+            whereHas('siswa',function($query)use($request)
+            {
+                $query->where('id_ruangan',Request()->ruangan);
+                $query->Where('sesi',Request()->sesi);
+            })
+            ->whereDate('absen.created_at',date('Y-m-d'))
             ->get();
-            // dd($request);
-            $all = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
-            ->where('siswa.id_ruangan', $request->ruangan)
-            ->where('siswa.sesi', $request->sesi)
-            ->whereDate('absen.created_at',date('Y-m-d'))
 
-            // ->groupBy('siswa.id')
-            ->count();
-             $hadir = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan')
-            ->where('siswa.id_ruangan', $request->ruangan)
-            ->where('siswa.sesi', $request->sesi)
-            ->where('status','hadir')
+            $hadir = Absen::
+            whereHas('siswa',function($query)use($request)
+            {
+                $query->where('id_ruangan',Request()->ruangan);
+                $query->Where('sesi',Request()->sesi);
+            })
             ->whereDate('absen.created_at',date('Y-m-d'))
+            ->where('status',"hadir")
             ->count();
 
-             $nohadir = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan')
-            ->where('siswa.id_ruangan', $request->ruangan)
-            ->where('siswa.sesi', $request->sesi)
+             $nohadir = Absen::
+            whereHas('siswa',function($query)use($request)
+            {
+                $query->where('id_ruangan',Request()->ruangan);
+                $query->Where('sesi',Request()->sesi);
+            })
+            ->whereDate('absen.created_at',date('Y-m-d'))
             ->where('status','!=','hadir')
             ->whereDate('absen.created_at',date('Y-m-d'))
             ->get();
 
-            $all1 = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
-            ->where('siswa.id_ruangan', $request->ruangan)
-            ->where('siswa.sesi', $request->sesi)
-            ->whereDate('absen.created_at',date('Y-m-d'))
-            ->get();
+            // $all1 = DB::table('absen')
+            // ->join('siswa', 'absen.id_siswa', 'siswa.id')
+            // ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
+            // ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
+            // ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
+            // ->where('siswa.id_ruangan', $request->ruangan)
+            // ->where('siswa.sesi', $request->sesi)
+            // ->whereDate('absen.created_at',date('Y-m-d'))
+            // ->get();
 
-            $hadir1 = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->select('absen.*','nama', 'nisn', 'no_kelas', 'kelas', 'jurusan')
-            ->where('siswa.id_ruangan', $request->ruangan)
-            ->where('siswa.sesi', $request->sesi);
-        if(count($all1) == 0){
+            // $hadir1 = DB::table('absen')
+            // ->join('siswa', 'absen.id_siswa', 'siswa.id')
+            // ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
+            // ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan')
+            // ->where('siswa.id_ruangan', $request->ruangan)
+            // ->where('siswa.sesi', $request->sesi);
+
+            // dd('s');
+        if(count($all) == 0){
             return redirect()->back()->with('error',"Data Yang Sesuai Tidak Ditemukan");
         }
 
-        $jurusan = DB::table('jurusan')->get();
-        $guru = DB::table('guru')->where('id',Request()->guru)->first();
-        $mapel1 = DB::table('mapel')->where('id',Request()->mapel1)->first();
-        $mapel2 = DB::table('mapel')->where('id',Request()->mapel2)->first();
-        $waktu = DB::table('waktu')->where('id',Request()->waktu)->first();
-        $ruang = DB::table('ruangan')->where('id',Request()->ruangan)->first();
+        $jurusan = Jurusan::all();
+        $guru = Guru::find(Request()->guru);
+        $mapel1 = mapel::find(Request()->mapel1);
+        $mapel2 = mapel::find(Request()->mapel2);
+        $waktu = waktu::find(Request()->waktu);
+        $ruang = ruangan::find(Request()->ruangan);
         // return view('dashboard.printpdf',compact('ruang','guru','all','hadir', 'all1', 'mapel1', 'mapel2', 'waktu','nohadir'));
+
         $pdf = Pdf::loadview('export.BeritaAcara',compact('ruang','guru','all','hadir', 'all1', 'mapel1', 'mapel2', 'waktu','nohadir'));
         $pdf->setPaper('A4','portrait');
         // return $pdf->download($ruang->nama_ruangan .'_sesi'.$all1[0]->sesi.'.pdf');s
