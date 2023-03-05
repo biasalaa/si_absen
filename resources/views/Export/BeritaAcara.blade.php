@@ -122,7 +122,7 @@
                 <p>Yang Hadir : {{ $hadir }} Orang</p>
                 <p>Yang Tidak Hadir : {{ $all - $hadir }} Orang, yakni : <br><br>
                     @foreach ($nohadir as $nohad)
-                        {{ $nohadir ? $nohad->nama . ',' : '' }}
+                        {{ $nohadir ? $nohad->siswa->nama_siswa . ',' : '' }}
                     @endforeach
                     <br><br>
 
@@ -141,11 +141,11 @@
                         <p> Pengawas,</p>
                         <br>
                         <div style="margin:0;margin-left:42px;">
-                            <?php echo DNS2D::getBarcodeHTML('TELAH DITANDATANGANI OLEH ' . $guru->guru, 'QRCODE', 3, 3); ?>
+                            <?php echo DNS2D::getBarcodeHTML('TELAH DITANDATANGANI OLEH ' . $guru->nama_guru, 'QRCODE', 3, 3); ?>
                         </div>
                         <br>
                         <br>
-                        <p style="margin:0,margin-bottom:-20px; margin-left:18px;">{{ $guru->guru }}</p>
+                        <p style="margin:0,margin-bottom:-20px; margin-left:18px;">{{ $guru->nama_guru }}</p>
                     </div>
                     <br>
                     <div class="tanda"
@@ -156,7 +156,7 @@
                         </div>
                         <br>
                         <br>
-                        <p style="margin:0">{{ $ruang->teknisi }}</p>
+                        <p style="margin:0">{{ $ruang->nama_teknisi }}</p>
                     </div>
                 </div>
             </div>

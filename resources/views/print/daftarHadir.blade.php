@@ -10,16 +10,17 @@
     <div class="section-body">
         <div class="card">
             <div class="card-body">
-                <form action="">
+                <form action="/exportAbsen" method="POST">
                     @csrf
                     <div class="row">
-
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label>Pilih Tanggal</label>
                                 <input type="date" class="form-control" name="waktu">
-                                @error('guru')
-                                    <small class="text-danger">{{ $message }}</small>
+                                @error('waktu')
+                                    <small style="color:red">
+                                        Silahkan memilih tanggal terlebih dahulu
+                                    </small>
                                 @enderror
                             </div>
                         </div>

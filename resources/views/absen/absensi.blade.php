@@ -101,7 +101,7 @@
                                         <td>{{ $d->siswa->tingkatan }} {{ $d->siswa->jurusan->jurusan }}
                                             {{ $d->siswa->no_kelas }}
                                         </td>
-                                        <td>{{ $d->sesi }}</td>
+                                        <td>{{ $d->siswa->sesi }}</td>
                                         <td>{{ $d->siswa->ruangan->nama_ruangan }}</td>
                                         <td><b style="color: rebeccapurple;font-weight: 900">{{ $d->status }}</b>
                                         </td>
