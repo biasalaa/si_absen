@@ -17,7 +17,7 @@ class AuthController extends Controller
         return view('auth.login');
     }
     public function loginUIAdmin()
-    { 
+    {
       $this->generateTahunAjaran();
         return view('auth.admin');
     }
@@ -48,8 +48,8 @@ class AuthController extends Controller
             return redirect()->back()->with('alert','Ruangan Belum Terdaftar');
 
             }
-           
-        } 
+
+        }
         else {
             return redirect()->back()->with('alert','NISN Tidak Terdaftar');
         }
@@ -77,7 +77,7 @@ class AuthController extends Controller
         if($month <= '06'){
             $tahun = date('Y',strtotime("-1 Year"))."/".date('Y');;
             $semester = "genap";
-           
+
         }else{
              $tahun = date('Y')."/".date('Y',strtotime("+1 year"));
             $semester = "ganjil";
@@ -95,5 +95,10 @@ class AuthController extends Controller
             ]);
         }
 
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect('/admin');
     }
 }

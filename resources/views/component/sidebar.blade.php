@@ -53,6 +53,10 @@
             <a href="/ruangan" class="nav-link "><i class="fas fa-th-large"></i>
                 <span>Ruangan</span></a>
         </li>
+        <li class="nav-item dropdown">
+            <a href="/jenis-ujian" class="nav-link "><i class="fas fa-th-large"></i>
+                <span>Jenis Ujian</span></a>
+        </li>
         <li class="menu-header">Setting</li>
         <li class="nav-item dropdown">
             <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>
@@ -61,6 +65,10 @@
         <li class="nav-item dropdown">
             <a href="/waktu" class="nav-link "><i class="fas fa-ellipsis-h"></i>
                 <span>Waktu Ujian</span></a>
+        </li>
+        <li class="nav-item dropdown">
+            <a href="/setting" class="nav-link "><i class="fas fa-ellipsis-h"></i>
+                <span>Judul Ujian</span></a>
         </li>
 
     </ul>
