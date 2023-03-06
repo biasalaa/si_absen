@@ -12,8 +12,8 @@
             <div class="card-body">
                 <form action="/exportAbsen" method="POST">
                     @csrf
-                    <div class="row">
-                        <div class="col-lg-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Pilih Tanggal</label>
                                 <input type="date" class="form-control" name="waktu">
@@ -24,6 +24,7 @@
                                 @enderror
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label>Pilih Jenis Ujian</label>
@@ -38,16 +39,33 @@
                                 @error('jenis')
                                     <small style="color:red">
                                         Silahkan memilih Jenis terlebih dahulu
+=======
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Pilih Jenis Ujian</label>
+                                <select name="jenis_ujian" class="form-control" id="">
+                                    <option value="">Pilih Disini</option>
+                                    @foreach ($jenis_ujian as $j)
+                                        <option value="{{ $j->id }}">{{ $j->jenis }}</option>
+                                    @endforeach
+                                </select>
+                                @error('jenis_ujian')
+                                    <small style="color:red">
+                                        Silahkan memilih jenis ujian terlebih dahulu
+>>>>>>> 4d72a9f024757fd5e9a9622acc023fe28f83b7dc
                                     </small>
                                 @enderror
                             </div>
                         </div>
+<<<<<<< HEAD
+=======
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary" name="action" value="Print">print</button>
+                        </div>
+>>>>>>> 4d72a9f024757fd5e9a9622acc023fe28f83b7dc
 
-                        {{-- <a href="/print"><button type="button" class="btn btn-md col-lg-2 indigo" name="action" value="Print">print</button></a> --}}
                     </div>
-                    <div class="form-group text-right">
-                        <button type="submit" class="btn btn-primary" name="action" value="Print">print</button>
-                    </div>
+
                 </form>
             </div>
         </div>

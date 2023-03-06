@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absen;
+use App\Models\Jenis_Ujian;
 use App\Models\Jurusan;
 use App\Models\Ruangan;
 use App\Models\Siswa;
@@ -30,7 +31,8 @@ class AbsenController extends Controller
     public function siapkanRuangUi()
     {
         $ruangan = Ruangan::all();
-        return view('absen.siapkanRuangan', compact('ruangan'));
+        $jenis_ujian = Jenis_Ujian::all();
+        return view('absen.siapkanRuangan', compact('ruangan','jenis_ujian'));
     }
 
 
@@ -39,16 +41,16 @@ class AbsenController extends Controller
         $request->validate([
             'sesi' => 'required',
             'ruangan' => 'required',
+            'jenis' => 'required',
         ]);
-        $siswa =  Siswa::where('id_ruangan', $request->ruangan)
-            ->where('sesi', $request->sesi)
-            ->get();
+        $siswa =  Siswa::where('id_ruangan', $request->ruangan)->where('sesi', $request->sesi)->get();
 
         if (count($siswa) == 0) {
             return redirect()->back()->with('error', 'Data  Siswa Belum Lengkap');
         }
 
         $cek = Absen::where('id_siswa', $siswa[0]->id)
+            ->where('id_jenis', Request()->jenis)
             ->whereDate('created_at', date('Y-m-d'))
             ->count();
 
@@ -73,7 +75,9 @@ class AbsenController extends Controller
                 Absen::create([
                     'id_siswa' => $r->id,
                     'status' => "belum hadir",
-                    'id_ajaran' => $id_ajaran
+                    'id_ajaran' => $id_ajaran,
+                    'id_jenis'=>Request()->jenis
+
                 ]);
             }
             return  redirect('/absen-siswa')->with('success', 'Ruangan berhasil di siapkan');

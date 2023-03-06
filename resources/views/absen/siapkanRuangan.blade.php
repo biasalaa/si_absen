@@ -49,6 +49,20 @@
                         </div>
                         <div class="col s3">
                             <div class="form-group">
+                                <label>Jenis Ujian</label>
+                                <select class="form-control select2" name="jenis">
+                                    <option value="">Pilih Disini</option>
+                                    @foreach ($jenis_ujian as $r)
+                                        <option value="{{ $r->id }}">{{ $r->jenis }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('jenis')
+                                <small style="color:red;">Jenis Ujian belum dipilih</small>
+                            @enderror
+                        </div>
+                        <div class="col s3">
+                            <div class="form-group">
                                 <label>Sesi</label>
                                 <select class="form-control" name="sesi">
                                     <option value="">Pilih Disini</option>
