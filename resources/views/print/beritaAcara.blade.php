@@ -23,7 +23,7 @@
                 <form action="/print-berita" method="POST">
                     @csrf
                     <div class="row">
-                        <div class="col-lg-5">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Ruangan</label>
                                 <select class="form-control   select2" name="ruangan">
@@ -43,7 +43,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-5">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Pengawas Ujian</label>
                                 <select class="form-control   select2" name="nama_guru">
@@ -59,8 +59,23 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Pilih Jenis Ujian</label>
+                                <select name="jenis_ujian" class="form-control" id="">
+                                    <option value="">Pilih Disini</option>
+                                    @foreach ($jenis_ujian as $j)
+                                        <option value="{{ $j->id }}">{{ $j->jenis }}</option>
+                                    @endforeach
+                                </select>
+                                @error('jenis_ujian')
+                                    <small style="color:red">
+                                        Silahkan memilih jenis ujian terlebih dahulu
+                                    </small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Waktu Ujian</label>
                                 <select class="form-control    js-select" name="waktu">
@@ -76,7 +91,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-5">
+                        <div class="col-lg-3">
                             <div class="form-group">
                                 <label>Mapel 1 </label>
                                 <select class="form-control    select2" name="mapel1">
@@ -91,7 +106,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-5">
+                        <div class="col-lg-3">
 
                             <div class="form-group">
                                 <label>Mapel 2 (optional) </label>

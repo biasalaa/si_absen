@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use App\Models\Absen;
 use App\Models\Guru;
+use App\Models\Jenis_Ujian;
 use App\Models\Mapel;
 use App\Models\Waktu;
 use App\Models\Jurusan;
@@ -32,21 +33,21 @@ class PrintController extends Controller
             ->select('siswa.*', 'jurusan')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
             ->get();
-        $data = Absen::
-            whereHas('siswa',function($query)use($request)
+        $data = Absen::whereHas('siswa',function($query)use($request)
             {
                 $query->where('tingkatan',Request()->kelas);
                 $query->orWhere('no_kelas',Request()->no_kelas);
-            })
-            ->get();
+            })->get();
 
-        $waktu = DB::table('waktu')->orderBy('waktu_awal','asc')->get();
-        $ruangan = DB::table('ruangan')->get();
-        $jurusan = DB::table('jurusan')->get();
-        $guru = DB::table('guru')->orderBy('nama_guru','asc')->get();
-        $mapel1 = DB::table('mapel')->get();
-        $mapel2 = DB::table('mapel')->get();
-        return view('print.beritaAcara', compact('jurusan', 'data', 'guru', 'ruangan', 'mapel1','mapel2' ,'waktu'));
+        $waktu = Waktu::orderBy('waktu_awal','asc')->get();
+        $ruangan = Ruangan::all();
+        $jurusan = Jurusan::all();
+        $guru = Guru::orderBy('nama_guru','asc')->get();
+        $mapel1 = Mapel::all();
+        $mapel2 = Mapel::all();
+        $jenis_ujian = Jenis_Ujian::all();
+
+        return view('print.beritaAcara', compact('jurusan', 'data', 'guru', 'ruangan', 'mapel1','mapel2' ,'waktu','jenis_ujian'));
     }
 
     /**
@@ -54,9 +55,10 @@ class PrintController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function daftarHadir()
     {
-        return view('print.daftarHadir');
+        $jenis_ujian = Jenis_Ujian::all();
+        return view('print.daftarHadir',compact('jenis_ujian'));
     }
 
     public function printBerita(Request $request)
@@ -66,6 +68,7 @@ class PrintController extends Controller
             'nama_guru'=>'required',
             'mapel1'=>'required',
             'waktu'=>'required',
+            'jenis_ujian'=>'required',
         ],
         [
             'ruangan.required' => 'ruangan tidak boleh kosong',
@@ -73,50 +76,25 @@ class PrintController extends Controller
             'mapel1.required' => 'mapel1 tidak boleh kosong',
             'mapel.required' => 'mapel tidak boleh kosong',
             'waktu.required' => 'waktu tidak boleh kosong',
+            'jenis_ujian.required' => 'Jenis Ujian tidak boleh kosong',
         ]);
             $id_ruangan = explode("+",Request()->ruangan)[0];
             $sesi = explode("+",Request()->ruangan)[1];
+            $jenis_ruangan_id = Request()->jenis_ujian;
             $siswa = Siswa::all();
-            $all = Absen::
+            $data = Absen::
             whereHas('siswa',function($query)use($id_ruangan,$sesi)
             {
                 $query->where('id_ruangan',$id_ruangan);
                 $query->Where('sesi',$sesi);
-            })
-            ->whereDate('absen.created_at',date('Y-m-d'))
-            ->count();
+            })->whereDate('absen.created_at',date('Y-m-d'))->where('id_jenis',$jenis_ruangan_id);
 
-            $hadir = Absen::
-            whereHas('siswa',function($query)use($id_ruangan,$sesi)
-            {
-                $query->where('id_ruangan',$id_ruangan);
-                $query->Where('sesi',$sesi);
-            })
-            ->whereDate('absen.created_at',date('Y-m-d'))
-            ->where('status',"hadir")
-            ->count();
-
-            $nohadir = Absen::
-            whereHas('siswa',function($query)use($id_ruangan,$sesi)
-            {
-                $query->where('id_ruangan',$id_ruangan);
-                $query->Where('sesi',$sesi);
-            })
-            ->whereDate('absen.created_at',date('Y-m-d'))
-            ->where('status','!=','hadir')
-            ->whereDate('absen.created_at',date('Y-m-d'))
-            ->get();
-
-            $all1 = DB::table('absen')
-            ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
-            ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
-            ->where('siswa.id_ruangan', $id_ruangan)
-            ->where('siswa.sesi', $sesi)
-            ->whereDate('absen.created_at',date('Y-m-d'))
-            ->get();
-
+           
+            $all = $data->count();
+            $all1 = $data->get();
+            $hadir = $data->where('status','hadir')->count();
+            $nohadir = $data->where('status','!=','hadir')->get();
+            $jenis_ujian = Jenis_Ujian::find($jenis_ruangan_id);
             // $hadir1 = DB::table('absen')
             // ->join('siswa', 'absen.id_siswa', 'siswa.id')
             // ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
@@ -124,7 +102,6 @@ class PrintController extends Controller
             // ->where('siswa.id_ruangan', $request->ruangan)
             // ->where('siswa.sesi', $request->sesi);
 
-            // dd('s');
         if($all == 0){
             return redirect()->back()->with('error',"Data Yang Sesuai Tidak Ditemukan");
         }
@@ -137,7 +114,7 @@ class PrintController extends Controller
         $ruang = ruangan::find($id_ruangan);
         // return view('dashboard.printpdf',compact('ruang','guru','all','hadir', 'all1', 'mapel1', 'mapel2', 'waktu','nohadir'));
 
-        $pdf = Pdf::loadview('export.BeritaAcara',compact('ruang','guru','all','all1', 'hadir', 'mapel1', 'mapel2', 'waktu','nohadir'));
+        $pdf = Pdf::loadview('export.BeritaAcara',compact('ruang','guru','all','all1', 'hadir', 'mapel1', 'mapel2', 'waktu','nohadir','jenis_ujian'));
         $pdf->setPaper('A4','portrait');
         // return $pdf->download($ruang->nama_ruangan .'_sesi'.$all1[0]->sesi.'.pdf');s
         return $pdf->download($ruang->nama_ruangan . '_R_'.($ruang->no_ruangan). '_SESI_'.$all1[0]->sesi.  '.pdf');

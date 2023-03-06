@@ -62,6 +62,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/berita-acara', PrintController::class);
     Route::post('/print-berita', [PrintController::class, 'printBerita']);
-    Route::get('/daftar-hadir', [PrintController::class, 'create']);
+    Route::get('/daftar-hadir', [PrintController::class, 'daftarHadir']);
     Route::post('/exportAbsen', [PrintController::class, 'printAbsen']);
 });

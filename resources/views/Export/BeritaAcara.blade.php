@@ -102,14 +102,21 @@
         <hr style="margin-top:-10px">
         <div class="body">
             <h5 style="text-align: center;  padding-left: 75px;">BERITA ACARA <br>
-                PENYELENGGARAAN UJIAN SATUAN PENDIDIKAN BERBASIS KOMPUTER <br>
+                PENYELENGGARAAN {{ $jenis_ujian->jenis }}<br>
                 TAHUN PELAJARAN 2022/2023
             </h5>
             <div class="content">
                 <p>Pada hari ini {{ $dayList[date('D')] }}, pada tanggal {{ date('d') }} bulan
                     {{ $montList[date('M')] }} tahun {{ date('Y') }}.</p>
                 {{-- <p>Pada hari ini Jum'at, pada tanggal 02 bulan {{$montList[date('M')]}} tahun {{date('Y')}}.</p> --}}
-                <p>Telah diselenggarakan UJIAN SATUAN PENDIDIKAN BERBASIS KOMPUTER (USPBK) dari pukul
+                @php
+                    $ret = '';
+                    foreach (explode(' ', $jenis_ujian->jenis) as $word) {
+                        $ret .= strtoupper($word[0]);
+                    }
+                    
+                @endphp
+                <p> {{ $jenis_ujian->jenis }} ({{ $ret }}) dari pukul
                     {{ $waktu->waktu_awal }} s/d pukul {{ $waktu->waktu_akhir }}
                 </p>
                 <br>
