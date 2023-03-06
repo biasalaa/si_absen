@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Absen;
 use App\Models\Link;
+use App\Models\Setting;
 use App\Models\Siswa;
 use App\Models\Tahun_Ajaran;
 use Illuminate\Http\Request;
@@ -14,12 +15,16 @@ class AuthController extends Controller
     public function loginUI()
     {
       $this->generateTahunAjaran();
-        return view('auth.login');
+      $judul = Setting::first()->judul ?? "UJIAN "+date("Y");
+
+        return view('auth.login',compact('judul'));
     }
     public function loginUIAdmin()
     {
+      $judul = Setting::first()->judul;
+
       $this->generateTahunAjaran();
-        return view('auth.admin');
+        return view('auth.admin',compact('judul'));
     }
 
     public function loginSiswa()
