@@ -48,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/setting', SettingController::class);
     Route::resource('/jenis-ujian', JenisUjianController::class);
 
+    Route::get('/filter-siswa', [SiswaController::class, 'filterSiswa']);
+
     Route::get('/absen-siswa', [AbsenController::class, 'index']);
     Route::get('/siapkan-ruangan', [AbsenController::class, 'siapkanRuangUi']);
     Route::post('/absenRuang', [AbsenController::class, 'siapkanRuang']);

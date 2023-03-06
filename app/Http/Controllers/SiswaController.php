@@ -20,12 +20,10 @@ class SiswaController extends Controller
      */
     public function index()
     {
-         $cari = Request()->cari;
-        $data = Siswa::paginate(20);
-        if ($cari) {
-        $data = Siswa::where('nama_siswa','like','%'.$cari)->paginate(20);
-        }
-        return view('siswa.index', compact('data','cari'));
+        $data = Siswa::all();
+        $cek=[];
+        $jurusan = Jurusan::all();
+        return view('siswa.index', compact('data', 'cek', 'jurusan'));
     }
 
     /**
@@ -91,15 +89,24 @@ class SiswaController extends Controller
         return redirect('/siswa')->with('success','Berhasil Menambah Siswa');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $User
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $User)
+
+   public function filterSiswa(Request $request)
     {
-        //
+        // dd('s');
+        $siswa = Siswa::all();
+
+        $data = Siswa::whereHas('siswa.jurusan', function ($query) use ($request) {
+            $query->where('id', $request->jurusan);
+        })
+            ->whereHas('siswa', function ($query) use ($request) {
+                $query->where('tingkatan', $request->kelas);
+                $query->where('no_kelas', $request->no_kelas);
+            })
+            ->get();
+
+        $jurusan = Jurusan::all();
+
+            return view('absen.absensi', compact('jurusan', 'data',));
     }
 
     /**
@@ -125,7 +132,7 @@ class SiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
       Request()->validate(
             [
                 'nama_siswa'=>'required',
@@ -200,7 +207,7 @@ class SiswaController extends Controller
      */
     public function destroy(Siswa $Siswa)
     {
-        
+
         $Siswa->delete();
         return redirect()->back()->with('success', 'Siswa Berhasil Dihapus');
     }
