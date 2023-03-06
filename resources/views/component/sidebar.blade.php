@@ -27,36 +27,40 @@
                 <span>Absensi Siswa</span></a>
         </li>
 
-        <li class="menu-header">Data Master</li>
-        <li class="nav-item dropdown">
-            <a href="/guru" class="nav-link "><i class="far fa-user"></i>
-                <span>Guru</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/siswa" class="nav-link "><i class="far fa-user"></i>
-                <span>Siswa</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/jurusan" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Jurusan</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/operator" class="nav-link "><i class="far fa-user"></i>
-                <span>Operator</span></a>
-        </li>
+        @if (Auth::user()->role === 'operator' || Auth::user()->role === 'admin')
+            <li class="menu-header">Data Master</li>
+            <li class="nav-item dropdown">
+                <a href="/guru" class="nav-link "><i class="far fa-user"></i>
+                    <span>Guru</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/siswa" class="nav-link "><i class="far fa-user"></i>
+                    <span>Siswa</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/jurusan" class="nav-link "><i class="fas fa-th-large"></i>
+                    <span>Jurusan</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/operator" class="nav-link "><i class="far fa-user"></i>
+                    <span>Operator</span></a>
+            </li>
 
-        <li class="nav-item dropdown">
-            <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Mapel</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/ruangan" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Ruangan</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/jenis-ujian" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Jenis Ujian</span></a>
-        </li>
+            <li class="nav-item dropdown">
+                <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
+                    <span>Mapel</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/ruangan" class="nav-link "><i class="fas fa-th-large"></i>
+                    <span>Ruangan</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/jenis-ujian" class="nav-link "><i class="fas fa-th-large"></i>
+                    <span>Jenis Ujian</span></a>
+            </li>
+        @endif
+
+
         <li class="menu-header">Setting</li>
         <li class="nav-item dropdown">
             <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>

@@ -106,7 +106,7 @@ class SiswaController extends Controller
 
         $jurusan = Jurusan::all();
 
-            return view('absen.absensi', compact('jurusan', 'data',));
+            return view('siswa.index', compact('jurusan', 'data',));
     }
 
     /**

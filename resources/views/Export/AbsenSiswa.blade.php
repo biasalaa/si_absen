@@ -6,8 +6,8 @@
             <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">{{ 'RUANG' }}
                 {{ $r->no_ruangan }} ( {{ $r->nama_ruangan }} )</th>
         <tr colspan="6">
-            <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">DAFTAR PESERTA UJIAN
-                SATUAN PENDIDIKAN BERBASIS KOMPUTER</th>
+            <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">DAFTAR PESERTA
+                {{ $data[0]->jenis }}</th>
 
         <tr colspan="6">
             <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">TAHUN PELAJARAN

@@ -92,9 +92,9 @@ class AbsenController extends Controller
         // dd('s');
         $absen = Absen::all();
 
-        // $data = Absen::whereHas('siswa.ruangan', function ($query) use ($request) {
-        //     $query->where('id', $request->ruangan);
-        // })
+        $data = Absen::whereHas('siswa.ruangan', function ($query) use ($request) {
+            $query->where('id', $request->ruangan);
+        });
             $data = Siswa::whereHas('siswa',function($query)use($request)
             {
                 $query->where('tingkatan',Request()->kelas);

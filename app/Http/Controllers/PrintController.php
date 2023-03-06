@@ -18,6 +18,7 @@ use App\Models\Jurusan;
 use App\Models\Ruangan;
 use App\Models\Siswa;
 use App\Models\Tahun_Ajaran;
+use App\Models\Jenis_Ujian;
 
 class PrintController extends Controller
 {
@@ -56,7 +57,8 @@ class PrintController extends Controller
      */
     public function create()
     {
-        return view('print.daftarHadir');
+        $jenis = Jenis_Ujian::all();
+        return view('print.daftarHadir', compact('jenis'));
     }
 
     public function printBerita(Request $request)
@@ -147,9 +149,10 @@ class PrintController extends Controller
     {
         // dd('s');
         $request->validate([
-            'waktu'=>'required'
+            'waktu'=>'required',
+            'jenis'=>'required'
         ]);
-        
+
         $siswa = DB::table('siswa')
             ->select('siswa.*', 'jurusan')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
@@ -159,16 +162,17 @@ class PrintController extends Controller
             ->join('siswa', 'absen.id_siswa', 'siswa.id')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
             ->join('tahun_ajaran', 'absen.id_ajaran', 'tahun_ajaran.id')
-            ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan','sesi', 'tahun')
+            ->join('jenis_ujian', 'absen.id_jenis', 'jenis_ujian.id')
+            ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan','sesi', 'tahun', 'jenis')
             // ->where('siswa.kelas', $request->kelas)
             // ->where('siswa.no_kelas', $request->no_kelas)
             // ->where('jurusan.jurusan', $request->jurusan)
             ->get();
-            
+
         $jurusan = DB::table('jurusan')->get();
         $ruang = DB::table('ruangan')->get();
         $guru = DB::table('guru')->get();
-        
+
         return Excel::download(new absenExport($request->waktu), 'PRESESNI_SISWA.xlsx');
     }
 

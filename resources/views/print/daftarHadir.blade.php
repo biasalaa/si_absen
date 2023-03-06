@@ -24,6 +24,24 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-lg-5">
+                            <div class="form-group">
+                                <label>Pilih Jenis Ujian</label>
+                                <select name="jenis" class="form-control select2" id="">
+                                    <option value="">Pilih Jurusan</option>
+                                    @foreach ($jenis as $j)
+                                        <option {{ old('id_jenis') == $j->id ? 'checked' : '' }}
+                                            value="{{ $j->id }}">
+                                            {{ $j->jenis }}</option>
+                                    @endforeach
+                                </select>
+                                @error('jenis')
+                                    <small style="color:red">
+                                        Silahkan memilih Jenis terlebih dahulu
+                                    </small>
+                                @enderror
+                            </div>
+                        </div>
 
                         {{-- <a href="/print"><button type="button" class="btn btn-md col-lg-2 indigo" name="action" value="Print">print</button></a> --}}
                     </div>
