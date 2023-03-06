@@ -34,11 +34,8 @@
         <div class="col-md-8 p-md-5 d-flex flex-column align-items-center justify-content-center ">
             {{-- <h1 class="text-white mt-5 pt-5 text-md-start text-center">Selamat datang <br> di aplikasi Absen Siswa --}}
             <h1 style="font-family: Arial, Helvetica, sans-serif"
-                class="text-white mt-md-5 pt-md-5 display-4 font-weight-bold fw-bold p-3 text-md-start text-center">
-                USPBK
-                <b>
-                    {{ date('Y') }}
-                </b>
+                class="text-white mt-md-5 pt-md-5 display-5 font-weight-bold fw-bold p-3 text-md-start text-center">
+                {{ $judul }}
             </h1>
 
         </div>

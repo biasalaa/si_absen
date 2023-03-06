@@ -34,11 +34,8 @@
         style="background-repeat: no-repeat;background-size: cover;background-image:linear-gradient(#000000ad,#000000ad), url({{ asset('bg.jpeg') }}) ">
         <div class="col-md-8 p-5 d-flex flex-column justify-content-center align-items-center ">
             <h1 style="font-family: Arial, Helvetica, sans-serif"
-                class="text-white mt-md-5 pt-md-5 display-4 font-weight-bold fw-bold p-3 text-md-start text-center">
-                USPBK
-                <b>
-                    {{ date('Y') }}
-                </b>
+                class="text-white mt-md-5 pt-md-5 display-5 font-weight-bold fw-bold p-3 text-md-start text-center">
+                {{ $judul }}
             </h1>
         </div>
         <div class="col-md-4 bg-white ">
