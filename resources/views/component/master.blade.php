@@ -62,6 +62,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="{{ asset('template') }}/assets/js/stisla.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
     <!-- JS Libraies -->
     <script src="{{ asset('template') }}/node_modules/simpleweather/jquery.simpleWeather.min.js"></script>
     <script src="{{ asset('template') }}/node_modules/chart.js/dist/Chart.min.js"></script>

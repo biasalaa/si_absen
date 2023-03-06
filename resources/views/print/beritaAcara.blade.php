@@ -26,11 +26,15 @@
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label>Ruangan</label>
-                                <select class="form-control    js-select" name="ruangan">
+                                <select class="form-control   select2" name="ruangan">
                                     <option value="">Pilih Disini</option>
                                     @foreach ($ruangan as $r)
-                                        <option {{ old('ruangan') == $r->id ? 'selected' : '' }}
-                                            value="{{ $r->id }}"> {{ $r->nama_ruangan }}</option Required>
+                                        @for ($i = 1; $i <= 3; $i++)
+                                            <option {{ old('ruangan') == $r->id ? 'selected' : '' }}
+                                                value="{{ $r->id }}+{{ $i }}"> {{ $r->nama_ruangan }} sesi
+                                                {{ $i }}
+                                            </option Required>
+                                        @endfor
                                     @endforeach
                                 </select>
                                 @error('ruangan')
@@ -42,7 +46,7 @@
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label>Pengawas Ujian</label>
-                                <select class="form-control    js-select" name="nama_guru">
+                                <select class="form-control   select2" name="nama_guru">
                                     <option value="">Pilih Disini</option>
                                     @foreach ($guru as $g)
                                         <option {{ old('nama_guru') == $g->id ? 'selected' : '' }}
@@ -51,21 +55,6 @@
                                     @endforeach
                                 </select>
                                 @error('guru')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label>sesi</label>
-                                <select class="form-control    js-select" name="sesi" Required>
-                                    <option value="">pilih</option>
-                                    <option {{ old('sesi') == 1 ? 'selected' : '' }} value="1">1</option>
-                                    <option {{ old('sesi') == 2 ? 'selected' : '' }} value="2">2</option>
-                                    <option {{ old('sesi') == 3 ? 'selected' : '' }} value="3">3</option>
-                                </select>
-                                @error('sesi')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -90,7 +79,7 @@
                         <div class="col-lg-5">
                             <div class="form-group">
                                 <label>Mapel 1 </label>
-                                <select class="form-control    js-select" name="mapel1">
+                                <select class="form-control    select2" name="mapel1">
                                     <option value="">Pilih</option>
                                     @foreach ($mapel1 as $m)
                                         <option value="{{ $m->id }}"> {{ $m->nama_mapel }}</option Required>
@@ -107,7 +96,7 @@
                             <div class="form-group">
                                 <label>Mapel 2 (optional) </label>
 
-                                <select class="form-control    js-select" name="mapel2">
+                                <select class="form-control    select2" name="mapel2">
                                     <option value="">Pilih</option>
                                     @foreach ($mapel2 as $m2)
                                         <option value="{{ $m2->id }}"> {{ $m2->nama_mapel }}</option>
@@ -115,7 +104,6 @@
                                 </select>
                             </div>
                         </div>
-
 
                         {{-- <a href="/print"><button type="button" class="btn btn-md col-lg-2 indigo" name="action" value="Print">print</button></a> --}}
                     </div>

@@ -93,10 +93,6 @@ class AbsenController extends Controller
     {
         // dd('s');
         $absen = Absen::all();
-        $siswa = DB::table('siswa')
-            ->select('siswa.*', 'jurusan')
-            ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->get();
 
         $data = Absen::whereHas('siswa.ruangan',function($query)use($request){
             $query->where('id',$request->ruangan);
@@ -123,14 +119,18 @@ class AbsenController extends Controller
 
             }
             return redirect()->back()->with('success','Berhasil menghadirkan siswa');
-        } catch (\Throwable $th) {
-            dd('error');
+            } catch (\Throwable $th) {
+                dd('error');
+            }
         }
+
+        if(count($data) == 0){
+            return redirect('/siapkan-ruangan')->with('error','Ruangan Belum di siapkan');
         }
 
-
-
-        return view('absen.absensi', compact('jurusan', 'data','ruang'));
+        else{
+            return view('absen.absensi', compact('jurusan', 'data','ruang'));
+        }
     }
 
     public function upStatus(Request $request,$id){

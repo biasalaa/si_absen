@@ -26,7 +26,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Ruangan</label>
-                                <select class="form-control" name="ruangan">
+                                <select class="form-control select2" name="ruangan">
                                     <option value="">Pilih Disini</option>
                                     @foreach ($ruang as $r)
                                         <option value="{{ $r->id }}"> {{ $r->nama_ruangan }}</option>

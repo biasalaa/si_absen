@@ -7,11 +7,11 @@
                 {{ $r->no_ruangan }} ( {{ $r->nama_ruangan }} )</th>
         <tr colspan="6">
             <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">DAFTAR PESERTA UJIAN
-                AKHIR SEMESTER GANJIL</th>
+                SATUAN PENDIDIKAN BERBASIS KOMPUTER</th>
 
         <tr colspan="6">
             <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">TAHUN PELAJARAN
-                2022/2023</th>
+                {{ $data[0]->tahun }}</th>
 
 
         </tr>

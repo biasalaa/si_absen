@@ -63,45 +63,44 @@ class PrintController extends Controller
     {
         $request->validate([
             'ruangan'=>'required',
-            'sesi'=>'required',
             'nama_guru'=>'required',
             'mapel1'=>'required',
             'waktu'=>'required',
         ],
         [
             'ruangan.required' => 'ruangan tidak boleh kosong',
-            'sesi.required' => 'sesi tidak boleh kosong',
             'nama_guru.required' => 'Pengawas tidak boleh kosong',
             'mapel1.required' => 'mapel1 tidak boleh kosong',
             'mapel.required' => 'mapel tidak boleh kosong',
             'waktu.required' => 'waktu tidak boleh kosong',
         ]);
-        $siswa = Siswa::all();
-        // dd($request);
+            $id_ruangan = explode("+",Request()->ruangan)[0];
+            $sesi = explode("+",Request()->ruangan)[1];
+            $siswa = Siswa::all();
             $all = Absen::
-            whereHas('siswa',function($query)use($request)
+            whereHas('siswa',function($query)use($id_ruangan,$sesi)
             {
-                $query->where('id_ruangan',Request()->ruangan);
-                $query->Where('sesi',Request()->sesi);
+                $query->where('id_ruangan',$id_ruangan);
+                $query->Where('sesi',$sesi);
             })
             ->whereDate('absen.created_at',date('Y-m-d'))
             ->count();
 
             $hadir = Absen::
-            whereHas('siswa',function($query)use($request)
+            whereHas('siswa',function($query)use($id_ruangan,$sesi)
             {
-                $query->where('id_ruangan',Request()->ruangan);
-                $query->Where('sesi',Request()->sesi);
+                $query->where('id_ruangan',$id_ruangan);
+                $query->Where('sesi',$sesi);
             })
             ->whereDate('absen.created_at',date('Y-m-d'))
             ->where('status',"hadir")
             ->count();
 
             $nohadir = Absen::
-            whereHas('siswa',function($query)use($request)
+            whereHas('siswa',function($query)use($id_ruangan,$sesi)
             {
-                $query->where('id_ruangan',Request()->ruangan);
-                $query->Where('sesi',Request()->sesi);
+                $query->where('id_ruangan',$id_ruangan);
+                $query->Where('sesi',$sesi);
             })
             ->whereDate('absen.created_at',date('Y-m-d'))
             ->where('status','!=','hadir')
@@ -113,8 +112,8 @@ class PrintController extends Controller
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
             ->join('ruangan', 'siswa.id_ruangan', 'ruangan.id')
             ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan', 'nama_ruangan', 'no_ruangan', 'nama_teknisi', 'sesi')
-            ->where('siswa.id_ruangan', $request->ruangan)
-            ->where('siswa.sesi', $request->sesi)
+            ->where('siswa.id_ruangan', $id_ruangan)
+            ->where('siswa.sesi', $sesi)
             ->whereDate('absen.created_at',date('Y-m-d'))
             ->get();
 
@@ -135,7 +134,7 @@ class PrintController extends Controller
         $mapel1 = mapel::find(Request()->mapel1);
         $mapel2 = mapel::find(Request()->mapel2);
         $waktu = waktu::find(Request()->waktu);
-        $ruang = ruangan::find(Request()->ruangan);
+        $ruang = ruangan::find($id_ruangan);
         // return view('dashboard.printpdf',compact('ruang','guru','all','hadir', 'all1', 'mapel1', 'mapel2', 'waktu','nohadir'));
 
         $pdf = Pdf::loadview('export.BeritaAcara',compact('ruang','guru','all','all1', 'hadir', 'mapel1', 'mapel2', 'waktu','nohadir'));
@@ -159,7 +158,8 @@ class PrintController extends Controller
         $data = DB::table('absen')
             ->join('siswa', 'absen.id_siswa', 'siswa.id')
             ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan','sesi')
+            ->join('tahun_ajaran', 'absen.id_ajaran', 'tahun_ajaran.id')
+            ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan','sesi', 'tahun')
             // ->where('siswa.kelas', $request->kelas)
             // ->where('siswa.no_kelas', $request->no_kelas)
             // ->where('jurusan.jurusan', $request->jurusan)
@@ -172,59 +172,4 @@ class PrintController extends Controller
         return Excel::download(new absenExport($request->waktu), 'PRESESNI_SISWA.xlsx');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
