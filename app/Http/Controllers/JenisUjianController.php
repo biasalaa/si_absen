@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Jenis_Ujian;
 use Illuminate\Http\Request;
+use Str;
+
 
 class JenisUjianController extends Controller
 {
@@ -12,9 +14,14 @@ class JenisUjianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $cari = Request()->cari;
+        $data = Jenis_Ujian::paginate(20);
+        if ($cari) {
+            $data = Jenis_Ujian::where('jenis', 'like', '%' . $cari)->paginate(20);
+        }
+        return view('jenis_ujian.index', compact('data', 'cari'));
     }
 
     /**
@@ -24,7 +31,7 @@ class JenisUjianController extends Controller
      */
     public function create()
     {
-        //
+        return view('jenis_ujian.create');
     }
 
     /**
@@ -35,7 +42,24 @@ class JenisUjianController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Request()->validate(
+            [
+                'jenis' => 'required',
+            ],
+            [
+                'Nama Jenis UJian Tidak Boleh kosong'
+            ]
+        );
+
+        $jenis = (Request()->jenis);
+
+        // insert data to database
+        Jenis_Ujian::create([
+            'jenis' => $jenis,
+        ]);
+
+
+        return redirect('/jenis-ujian')->with('success', 'Berhasil Menambah Jenis Ujian');
     }
 
     /**
@@ -55,9 +79,10 @@ class JenisUjianController extends Controller
      * @param  \App\Models\Jenis_Ujian  $jenis_Ujian
      * @return \Illuminate\Http\Response
      */
-    public function edit(Jenis_Ujian $jenis_Ujian)
+    public function edit($id)
     {
-        //
+        $jenis_Ujian = Jenis_Ujian::find($id);
+        return view('jenis_ujian.edit', compact('jenis_Ujian'));
     }
 
     /**
@@ -69,7 +94,25 @@ class JenisUjianController extends Controller
      */
     public function update(Request $request, Jenis_Ujian $jenis_Ujian)
     {
-        //
+        // dd('s');
+        Request()->validate(
+            [
+                'jenis' => 'required',
+            ],
+            [
+                'Nama Jenis UJian Tidak Boleh kosong'
+            ]
+        );
+
+        $jenis = (Request()->jenis);
+
+        // insert data to database
+        $jenis_Ujian->update([
+            'jenis' => $jenis,
+        ]);
+
+
+        return redirect('/jenis-ujian')->with('success', 'Berhasil Mengedit jenis ujian');
     }
 
     /**
@@ -78,8 +121,9 @@ class JenisUjianController extends Controller
      * @param  \App\Models\Jenis_Ujian  $jenis_Ujian
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jenis_Ujian $jenis_Ujian)
+    public function destroy($id)
     {
-        //
+        $jenis_Ujian = Jenis_Ujian::find($id)->delete();
+        return redirect()->back()->with('success', 'jenis ujian Berhasil Di Hapus');
     }
 }
