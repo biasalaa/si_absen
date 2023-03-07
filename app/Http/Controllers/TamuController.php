@@ -6,21 +6,22 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Str;
 
-class OperatorController extends Controller
+class TamuController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-   public function index()
+    public function index()
     {
+        // dd('s');
          $cari = Request()->cari;
-        $data = User::where('role','operator')->paginate(20);
+        $data = User::where('role','tamu')->paginate(20);
         if ($cari) {
         $data = User::where('nama','like','%'.$cari)->where('role','operator')->paginate(20);
         }
-        return view('operator.index', compact('data','cari'));
+        return view('tamu.index', compact('data','cari'));
     }
 
     /**
@@ -30,7 +31,7 @@ class OperatorController extends Controller
      */
     public function create()
     {
-         return view('operator.create');
+        return view('tamu.create');
     }
 
     /**
@@ -63,20 +64,20 @@ class OperatorController extends Controller
             'nama'=>$nama,
             'username'=>$username,
             'password'=>$password,
-            'role'=>'operator',
+            'role'=>'tamu',
         ]);
 
 
-        return redirect('/operator')->with('success','Berhasil Menambah Operator');
+        return redirect('/tamu')->with('success','Berhasil Menambah Data Tamu');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $User
+     * @param  \App\Models\Tamu  $tamu
      * @return \Illuminate\Http\Response
      */
-    public function show(User $User)
+    public function show(Tamu $tamu)
     {
         //
     }
@@ -84,12 +85,11 @@ class OperatorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $User
+     * @param  \App\Models\Tamu  $tamu
      * @return \Illuminate\Http\Response
      */
-    public function edit( $id)
+    public function edit($id)
     {
-
         $data = User::find($id);
         return view('operator.edit', compact('data'));
     }
@@ -98,13 +98,12 @@ class OperatorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $User
+     * @param  \App\Models\Tamu  $tamu
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-
-      Request()->validate(
+        Request()->validate(
             [
                 'nama'=>'required',
                 'username'=>'required|unique:users,username,'.$id
@@ -127,23 +126,22 @@ class OperatorController extends Controller
             'nama'=>$nama,
             'username'=>$username,
             'password'=>$password,
-            'role'=>'operator',
+            'role'=>'tamu',
         ]);
 
 
-        return redirect('/operator')->with('success','Berhasil Mengubah Operator');
+        return redirect('/tamu')->with('success','Berhasil Mengubah Data Tamu');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $User
+     * @param  \App\Models\Tamu  $tamu
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        // dd('s');
         $User = User::find($id)->delete();
-        return redirect()->back()->with('success', 'Operator Berhasil Dihapus');
+        return redirect()->back()->with('success', 'Data Tamu Berhasil Dihapus');
     }
 }
