@@ -82,38 +82,6 @@
                     <span>Judul Ujian</span></a>
             </li>
         @endif
-
-
-
-<<<<<<< HEAD
-        <li class="nav-item dropdown">
-            <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Mapel</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/ruangan" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Ruangan</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/jenis-ujian" class="nav-link "><i class="fas fa-th-large"></i>
-                <span>Jenis Ujian</span></a>
-        </li>
-        <li class="menu-header">Setting</li>
-        <li class="nav-item dropdown">
-            <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>
-                <span>Link</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/waktu" class="nav-link "><i class="fas fa-ellipsis-h"></i>
-                <span>Waktu Ujian</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/setting" class="nav-link "><i class="fas fa-ellipsis-h"></i>
-                <span>Setting </span></a>
-        </li>
-=======
->>>>>>> 8209901d4412d0279b40790bb243831f7d070408
-
     </ul>
 
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">

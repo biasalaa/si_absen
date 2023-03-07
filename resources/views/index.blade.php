@@ -69,7 +69,6 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
     <div class="row">
         <div class="col-md-9">
             <div class="card">
@@ -130,12 +129,6 @@
                     </div>
                 </div>
             </div>
-=======
-
-    <div class="row">
-        <div class="card">
-            .
->>>>>>> 8209901d4412d0279b40790bb243831f7d070408
         </div>
     </div>
 @endsection
