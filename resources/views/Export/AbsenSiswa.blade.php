@@ -1,15 +1,5 @@
 <table>
     @foreach ($ruang as $r)
-<<<<<<< HEAD
-        <tr colspan="6">
-        <tr colspan="6">
-        <tr colspan="6">
-            <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">{{ 'RUANG' }}
-                {{ $r->no_ruangan }} ( {{ $r->nama_ruangan }} )</th>
-        <tr colspan="6">
-            <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">DAFTAR PESERTA
-                {{ $data[0]->jenis }}</th>
-=======
         @php
             $index = 1;
         @endphp
@@ -18,13 +8,12 @@
                 <tr colspan="6">
                 <tr colspan="6">
                 <tr colspan="6">
-                    <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">
+                    <th align="center" colspan="6" style="font-size: 15px; font-weight: bold; width:800px">
                         {{ 'RUANG' }}
                         {{ $r->no_ruangan }} ( {{ $r->nama_ruangan }} )</th>
                 <tr colspan="6">
                     <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">
                         {{ $jenis_ujian->jenis }}</th>
->>>>>>> 4d72a9f024757fd5e9a9622acc023fe28f83b7dc
 
                 <tr colspan="6">
                     <th align="center" colspan="6" style="font-size: 15px;font-weight: bold; width:800px">TAHUN
@@ -47,7 +36,7 @@
                 'Fri' => 'Jumat',
                 'Sat' => 'Sabtu',
             ];
-            
+
             $montList = [
                 'Jan' => 'januari',
                 'Feb' => 'Februari',

@@ -19,7 +19,7 @@ use App\Models\Jurusan;
 use App\Models\Ruangan;
 use App\Models\Siswa;
 use App\Models\Tahun_Ajaran;
-use App\Models\Jenis_Ujian;
+
 
 class PrintController extends Controller
 {
@@ -58,13 +58,8 @@ class PrintController extends Controller
      */
     public function daftarHadir()
     {
-<<<<<<< HEAD
-        $jenis = Jenis_Ujian::all();
-        return view('print.daftarHadir', compact('jenis'));
-=======
         $jenis_ujian = Jenis_Ujian::all();
-        return view('print.daftarHadir',compact('jenis_ujian'));
->>>>>>> 4d72a9f024757fd5e9a9622acc023fe28f83b7dc
+        return view('print.daftarHadir', compact('jenis_ujian'));
     }
 
     public function printBerita(Request $request)
@@ -95,7 +90,7 @@ class PrintController extends Controller
                 $query->Where('sesi',$sesi);
             })->whereDate('absen.created_at',date('Y-m-d'))->where('id_jenis',$jenis_ruangan_id);
 
-           
+
             $all = $data->count();
             $all1 = $data->get();
             $hadir = $data->where('status','hadir')->count();
@@ -131,7 +126,7 @@ class PrintController extends Controller
         // dd('s');
         $request->validate([
             'waktu'=>'required',
-            'jenis'=>'required'
+            'jenis_ujian'=>'required'
         ]);
 
         $siswa = DB::table('siswa')

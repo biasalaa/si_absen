@@ -10,6 +10,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TahunAjaranController;
+use App\Http\Controllers\TamuController;
 use App\Http\Controllers\WaktuController;
 use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\AuthController;
@@ -45,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/ruangan', RuanganController::class);
     Route::resource('/tahun_ajaran', TahunAjaranController::class);
     Route::resource('/operator', OperatorController::class);
+    Route::resource('/tamu', TamuController::class);
     Route::resource('/setting', SettingController::class);
     Route::resource('/jenis-ujian', JenisUjianController::class);
 

@@ -8,26 +8,31 @@
     <ul class="sidebar-menu">
         <li class="menu-header"></li>
         <li class="menu-header"></li>
+
         <li class="menu-header">Dashboard</li>
         <li class="nav-item dropdown active">
             <a href="/" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a>
         </li>
 
-        <li class="menu-header">Print</li>
-        <li><a class="nav-link" href="/berita-acara"><i class="fas fa-print"></i> <span>Berita Acara</span></a></li>
-        <li><a class="nav-link" href="/daftar-hadir"><i class="fas fa-print"></i> <span>Daftar Hadir</span></a></li>
 
-        <li class="menu-header">Absen</li>
-        <li class="nav-item dropdown">
-            <a href="/siapkan-ruangan" class="nav-link"><i class="far fa-file-alt"></i>
-                <span>Siapkan Ruangan</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/absen-siswa" class="nav-link "><i class="far fa-file-alt"></i>
-                <span>Absensi Siswa</span></a>
-        </li>
 
         @if (Auth::user()->role === 'operator' || Auth::user()->role === 'admin')
+            <li class="menu-header">Print</li>
+            <li><a class="nav-link" href="/berita-acara"><i class="fas fa-print"></i> <span>Berita Acara</span></a></li>
+            <li><a class="nav-link" href="/daftar-hadir"><i class="fas fa-print"></i> <span>Daftar Hadir</span></a></li>
+
+            <li class="menu-header">Absen</li>
+            <li class="nav-item dropdown">
+                <a href="/siapkan-ruangan" class="nav-link"><i class="far fa-file-alt"></i>
+                    <span>Siapkan Ruangan</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/absen-siswa" class="nav-link "><i class="far fa-file-alt"></i>
+                    <span>Absensi Siswa</span></a>
+            </li>
+        @endif
+
+        @if (Auth::user()->role === 'admin')
             <li class="menu-header">Data Master</li>
             <li class="nav-item dropdown">
                 <a href="/guru" class="nav-link "><i class="far fa-user"></i>
@@ -45,6 +50,10 @@
                 <a href="/operator" class="nav-link "><i class="far fa-user"></i>
                     <span>Operator</span></a>
             </li>
+            <li class="nav-item dropdown">
+                <a href="/tamu" class="nav-link "><i class="far fa-user"></i>
+                    <span>Tamu</span></a>
+            </li>
 
             <li class="nav-item dropdown">
                 <a href="/mapel" class="nav-link "><i class="fas fa-th-large"></i>
@@ -58,22 +67,24 @@
                 <a href="/jenis-ujian" class="nav-link "><i class="fas fa-th-large"></i>
                     <span>Jenis Ujian</span></a>
             </li>
+
+            <li class="menu-header">Setting</li>
+            <li class="nav-item dropdown">
+                <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>
+                    <span>Link</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/waktu" class="nav-link "><i class="fas fa-ellipsis-h"></i>
+                    <span>Waktu Ujian</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/setting" class="nav-link "><i class="fas fa-ellipsis-h"></i>
+                    <span>Judul Ujian</span></a>
+            </li>
         @endif
 
 
-        <li class="menu-header">Setting</li>
-        <li class="nav-item dropdown">
-            <a href="/link" class="nav-link "><i class="fas fa-exclamation"></i>
-                <span>Link</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/waktu" class="nav-link "><i class="fas fa-ellipsis-h"></i>
-                <span>Waktu Ujian</span></a>
-        </li>
-        <li class="nav-item dropdown">
-            <a href="/setting" class="nav-link "><i class="fas fa-ellipsis-h"></i>
-                <span>Judul Ujian</span></a>
-        </li>
+
 
     </ul>
 

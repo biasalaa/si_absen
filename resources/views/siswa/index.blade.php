@@ -14,10 +14,30 @@
                     <h3><b>FIlter </b></h3>
                 </div>
                 <div class="">
-                    <a href="{{ Request()->url() }}/create" class="btn btn-success" style="color:white ;">Tambah Data Siswa</a>
                     <button class="btn btn-primary" id="modal-siswa">Import Data Siswa</button>
                 </div>
             </div>
+
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible show fade m-2">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {!! session('success') !!}
+                    </div>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible show fade m-2">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                        {!! session('error') !!}
+                    </div>
+                </div>
+            @endif
 
             <form action="/filter-siswa" method="get">
                 {{-- @csrf --}}
@@ -69,76 +89,58 @@
                 </div>
         </div>
         </form>
-
     </div>
-    </div>
-
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible show fade m-2">
-            <div class="alert-body">
-                <button class="close" data-dismiss="alert">
-                    <span>&times;</span>
-                </button>
-                {!! session('success') !!}
-            </div>
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible show fade m-2">
-            <div class="alert-body">
-                <button class="close" data-dismiss="alert">
-                    <span>&times;</span>
-                </button>
-                {!! session('error') !!}
-            </div>
-        </div>
-    @endif
 
     @if (count($cek) > 0)
-        <div class="card">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-striped table-md">
-                        <tr>
-                            <th scope="col">No</th>
-                            <th scope="col">Nama Siswa</th>
-                            <th scope="col">NiSN</th>
-                            <th scope="col">Kelas</th>
-                            <th scope="col">Sesi</th>
-                            <th scope="col">Ruangan</th>
-                        </tr>
-                        <tr>
-                            @forelse ($data as $j)
-                                <th scope="row">{{ $loop->iteration }}</th>
-                                <td> {{ $j->nama_siswa }} </td>
-                                <td> {{ $j->nisn }} </td>
-                                <td> {{ $j->tingkatan }} {{ $j->jurusan->jurusan }} {{ $j->no_kelas }} </td>
-                                <td> {{ $j->sesi }} </td>
-                                <td> {{ $j->ruangan->nama_ruangan }} </td>
-                                <td>
-                                    <div class=" d-flex ">
-                                        <div class="m-1">
-                                            <a href="{{ Request()->url() }}/{{ $j->id }}/edit"
-                                                class="btn btn-warning"><i class="fas fa-edit"></i></a>
+        <div class="section-body">
+            <div class="card">
+                <div class="card-header">
+                    <a href="siswa/create" class="btn btn-success" style="color:white ;">Tambah Data
+                        Siswa</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-md">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama Siswa</th>
+                                <th scope="col">NiSN</th>
+                                <th scope="col">Kelas</th>
+                                <th scope="col">Sesi</th>
+                                <th scope="col">Ruangan</th>
+                            </tr>
+                            <tr>
+                                @forelse ($data as $j)
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td> {{ $j->nama_siswa }} </td>
+                                    <td> {{ $j->nisn }} </td>
+                                    <td> {{ $j->tingkatan }} {{ $j->jurusan->jurusan }} {{ $j->no_kelas }} </td>
+                                    <td> {{ $j->sesi }} </td>
+                                    <td> {{ $j->ruangan->nama_ruangan }} </td>
+                                    <td>
+                                        <div class=" d-flex ">
+                                            <div class="m-1">
+                                                <a href="siswa/{{ $j->id }}/edit" class="btn btn-warning"><i
+                                                        class="fas fa-edit"></i></a>
+                                            </div>
+                                            <div class="m-1">
+                                                <form class="d-inline" action="siswa/{{ $j->id }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="btn btn-danger" type="submit"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </div>
-                                        <div class="m-1">
-                                            <form class="d-inline" action="{{ Request()->url() }}/{{ $j->id }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger" type="submit"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" align="center">Data Belum Ada</td>
-                        </tr>
+                                    </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" align="center">Data Belum Ada</td>
+                            </tr>
     @endforelse
     </table>
+    </div>
     </div>
     </div>
     </div>

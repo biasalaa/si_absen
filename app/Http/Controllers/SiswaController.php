@@ -95,18 +95,16 @@ class SiswaController extends Controller
         // dd('s');
         $siswa = Siswa::all();
 
-        $data = Siswa::whereHas('siswa.jurusan', function ($query) use ($request) {
+        $data = Siswa::whereHas('jurusan', function ($query) use ($request) {
             $query->where('id', $request->jurusan);
         })
-            ->whereHas('siswa', function ($query) use ($request) {
-                $query->where('tingkatan', $request->kelas);
-                $query->where('no_kelas', $request->no_kelas);
-            })
+
+           ->where('tingkatan', $request->kelas)
+            ->where('no_kelas', $request->no_kelas)
             ->get();
-
-        $jurusan = Jurusan::all();
-
-            return view('siswa.index', compact('jurusan', 'data',));
+            $jurusan = Jurusan::all();
+            $cek = ['s'];
+            return view('siswa.index', compact('jurusan', 'data','cek'));
     }
 
     /**
