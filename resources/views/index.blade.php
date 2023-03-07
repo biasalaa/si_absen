@@ -69,4 +69,66 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Ruangan Yang Sudah Disiapkan</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <tr>
+
+                                <th>Ruangan</th>
+                                <th>Total Siswa</th>
+                                <th>Siswa Hadir</th>
+                                <th>Siswa Tidak Hadir</th>
+                            </tr>
+                            @foreach ($info_ruangan as $ir)
+                                <tr>
+
+
+                                    <td class="align-middle">
+                                        {{ $ir->nama_ruangan }}
+                                    </td>
+                                    <td>
+                                        {{ $ir->total_siswa }}
+                                    </td>
+                                    <td>
+                                        {{ $ir->total_siswa_hadir }}
+                                    </td>
+                                    <td>
+                                        {{ $ir->total_siswa_tidak_hadir }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h6>Ruangan Yang Belum Disiapkan</h6>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height:500px ;overflow: auto">
+                        <table class="table table-striped">
+                            @foreach ($ruangan_belum_disiapkan as $ir)
+                                <tr>
+                                    <td class="align-middle">
+                                        {{ $ir->nama_ruangan }}
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

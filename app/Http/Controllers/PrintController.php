@@ -78,6 +78,8 @@ class PrintController extends Controller
             'waktu.required' => 'waktu tidak boleh kosong',
             'jenis_ujian.required' => 'Jenis Ujian tidak boleh kosong',
         ]);
+
+        
             $id_ruangan = explode("+",Request()->ruangan)[0];
             $sesi = explode("+",Request()->ruangan)[1];
             $jenis_ruangan_id = Request()->jenis_ujian;
@@ -92,15 +94,16 @@ class PrintController extends Controller
            
             $all = $data->count();
             $all1 = $data->get();
-            $hadir = $data->where('status','hadir')->count();
             $nohadir = $data->where('status','!=','hadir')->get();
+            $hadir = Absen::
+            whereHas('siswa',function($query)use($id_ruangan,$sesi)
+            {
+                $query->where('id_ruangan',$id_ruangan);
+                $query->Where('sesi',$sesi);
+            })->whereDate('absen.created_at',date('Y-m-d'))->where('id_jenis',$jenis_ruangan_id)->where('status','hadir')->count();
+
             $jenis_ujian = Jenis_Ujian::find($jenis_ruangan_id);
-            // $hadir1 = DB::table('absen')
-            // ->join('siswa', 'absen.id_siswa', 'siswa.id')
-            // ->join('jurusan', 'siswa.id_jurusan', 'jurusan.id')
-            // ->select('absen.*','nama_siswa', 'nisn', 'no_kelas', 'tingkatan', 'jurusan')
-            // ->where('siswa.id_ruangan', $request->ruangan)
-            // ->where('siswa.sesi', $request->sesi);
+
 
         if($all == 0){
             return redirect()->back()->with('error',"Data Yang Sesuai Tidak Ditemukan");
@@ -112,11 +115,9 @@ class PrintController extends Controller
         $mapel2 = mapel::find(Request()->mapel2);
         $waktu = waktu::find(Request()->waktu);
         $ruang = ruangan::find($id_ruangan);
-        // return view('dashboard.printpdf',compact('ruang','guru','all','hadir', 'all1', 'mapel1', 'mapel2', 'waktu','nohadir'));
 
         $pdf = Pdf::loadview('export.BeritaAcara',compact('ruang','guru','all','all1', 'hadir', 'mapel1', 'mapel2', 'waktu','nohadir','jenis_ujian'));
         $pdf->setPaper('A4','portrait');
-        // return $pdf->download($ruang->nama_ruangan .'_sesi'.$all1[0]->sesi.'.pdf');s
         return $pdf->download($ruang->nama_ruangan . '_R_'.($ruang->no_ruangan). '_SESI_'.$all1[0]->sesi.  '.pdf');
     }
 

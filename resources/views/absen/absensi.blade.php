@@ -32,7 +32,7 @@
             <form action="/filter-absen" method="get">
                 {{-- @csrf --}}
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label>Ruangan</label>
@@ -64,9 +64,7 @@
                         </div>
 
                         <div class="col-lg-1 ">
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary" name="action" value="Filter">
-                            </div>
+                            <input type="submit" class="btn btn-primary" name="action" value="Filter">
                         </div>
                     </div>
                 </div>

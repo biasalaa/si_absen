@@ -68,7 +68,7 @@
         </li>
         <li class="nav-item dropdown">
             <a href="/setting" class="nav-link "><i class="fas fa-ellipsis-h"></i>
-                <span>Judul Ujian</span></a>
+                <span>Setting </span></a>
         </li>
 
     </ul>

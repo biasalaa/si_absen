@@ -34,7 +34,7 @@ class MapelImport implements ToModel,WithHeadingRow
         }
 
         $namaData = strtoupper($namaData);
-        $cek = Mapel::where('Mapel',$namaData)->first();
+        $cek = Mapel::where('nama_mapel',$namaData)->first();
         if($cek){
             $this->gagal++;
              return;

@@ -32,7 +32,7 @@
             <div class="card-body">
                 <form action="/absenRuang" method="POST">
                     @csrf
-                    <div class="row">
+                    <div class="row align-items-center">
                         <div class="col s3">
                             <div class="form-group">
                                 <label>Ruangan</label>
@@ -79,9 +79,7 @@
 
 
                         <div class="col s1 m-t-30">
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary" name="action" value="Siapkan Ruangan">
-                            </div>
+                            <input type="submit" class="btn btn-primary" name="action" value="Siapkan Ruangan">
                         </div>
                     </div>
                 </form>

@@ -26,7 +26,7 @@ class GuruImport implements ToModel,WithHeadingRow
     {
         $this->total++;
 
-        $namaData = $row['nama'] ?? null;
+        $namaData = $row['guru'] ?? null;
   
         if (!$namaData) {
             $this->error = true;
